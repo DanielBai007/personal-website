@@ -5,94 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人简历 - 个人网站</title>
     <style>
-        * {
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #333333;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: #0A0A0A;
-            min-height: 100vh;
-            color: #333;
+            transition: background-color 0.3s ease;
         }
 
         .navbar {
-            background: #202937;
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
+            background-color: #202937;
+            padding: 1rem 2rem;
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
+            width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo .logo-icon {
+            width: 24px;
+            height: 24px;
         }
 
         .nav-logo span {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .nav-menu {
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        .nav-link {
+        .nav-link a {
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            color: #ffffff;
             font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            opacity: 0.8;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 5px;
         }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transform: translateY(-2px);
-            opacity: 1;
+        .nav-link a:hover {
+            color: #ffffff;
         }
 
-        .nav-link.active {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            opacity: 1;
+        .nav-link a.active {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-            margin-top: 80px;
+            padding-top: 80px;
         }
 
-        .resume-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        .header-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
+        header {
+            background: linear-gradient(to right, #89f7fe 0%, #66a6ff 100%);
+            color: #212529;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px;
         }
 
         .header-content {
@@ -106,405 +94,378 @@
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.2);
             margin: 0 auto 20px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(0, 0, 0, 0.1);
             object-fit: cover;
         }
 
         .name {
             font-size: 36px;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .title {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
 
         .contact-info {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 20px;
+            font-size: 16px;
         }
 
-        .contact-item {
+        .contact-info span {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
+            color: #2c3e50;
         }
 
-        .section {
-            padding: 2.5rem 2rem;
+        .contact-info .icon {
+            margin-right: 8px;
+            font-style: normal;
+        }
+
+        .job-status {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+
+        .job-status strong {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        main {
+            padding: 40px 20px;
+            background-color: #ffffff;
+        }
+
+        section {
+            max-width: 900px;
+            margin: 0 auto 40px auto;
         }
 
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .section-title::before {
             content: '';
-            width: 4px;
-            height: 30px;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 3px;
+            width: 50px;
             background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
-            border-radius: 2px;
         }
 
         .experience-item {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 30px;
         }
 
-        .experience-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .experience-item h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #212529;
         }
 
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .company {
-            font-size: 1.1rem;
-            color: #667eea;
-            margin-bottom: 0.3rem;
-        }
-
-        .duration {
-            font-size: 0.9rem;
-            color: #718096;
-            background: #f7fafc;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+        .experience-item .date {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
 
         .job-description {
-            color: #4a5568;
-            line-height: 1.6;
-            margin-top: 1rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #e83e8c;
+            font-weight: bold;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
 
         .skill-category {
-            background: #f8f9fa;
-            padding: 1.5rem;
+            background-color: #fff;
+            border: 1px solid #eef0f2;
+            padding: 25px;
             border-radius: 12px;
-            border-left: 4px solid #0096FF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .skill-category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 1rem;
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .skill-category h4 {
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
         .skill-tag {
-            background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
-            color: white;
-            padding: 0.3rem 0.8rem;
+            padding: 6px 14px;
             border-radius: 15px;
-            font-size: 0.85rem;
+            font-size: 14px;
             font-weight: 500;
+        }
+
+        .skill-tag.ai {
+            background-color: #e7f5ff;
+            color: #1c7ed6;
+        }
+
+        .skill-tag.product {
+            background-color: #f3e8ff;
+            color: #7048e8;
+        }
+
+        .skill-tag.data {
+            background-color: #fff0f6;
+            color: #d6336c;
+        }
+
+        .skill-tag.media {
+            background-color: #fff4e6;
+            color: #f76707;
         }
 
         .education-item {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-
-        .education-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .education-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 0.3rem;
+            margin-bottom: 20px;
         }
 
         .education-school {
-            color: #0096FF;
-            font-weight: 500;
-            margin-bottom: 0.3rem;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #212529;
         }
 
-        .education-year {
-            color: #718096;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-                margin-top: 70px;
-            }
-            
-            .section {
-                padding: 1.5rem 1.5rem;
-            }
-            
-            .name {
-                font-size: 2rem;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-container {
-                padding: 0 1rem;
-            }
-            
-            .nav-menu {
-                gap: 1rem;
-            }
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
-            padding: 40px;
-            border-radius: 15px;
+        .education-details {
+            color: #6c757d;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span>💼 个人网站</span>
-            </div>
-            <div class="nav-menu">
-                <a href="index.html" class="nav-link">首页</a>
-                <a href="portfolio.html" class="nav-link">作品展示</a>
-                <a href="resume.html" class="nav-link active">个人简历</a>
-            </div>
+        <div class="nav-logo">
+            <span class="text94">白先生的数字世界</span>
         </div>
+        <ul class="nav-links">
+            <li class="nav-link"><a href="index.html">首页</a></li>
+            <li class="nav-link"><a href="portfolio.html">作品展示</a></li>
+            <li class="nav-link"><a href="resume.html" class="active">个人简历</a></li>
+        </ul>
     </nav>
-
     <div class="container">
         <header>
             <div class="header-content">
-                <img src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/Xnip2025-07-25_17-22-54.jpg?q-sign-algorithm=sha1&q-ak=AKID_WWMhtOFDJKbnbYMBVVE85mX017e0PeEifJHy0iZwaalLL2GhpwRWoBNVwv3cboQ&q-sign-time=1753435401;1753439001&q-key-time=1753435401;1753439001&q-header-list=host&q-url-param-list=ci-process&q-signature=66962a9a0b02bf0d6dce88a3ecc849b12783502a&x-cos-security-token=9pMMpysaxa0VWi6dLsEHqfSkhyL4UzGa29d16f708a73db5769360d6e00ee538bjBX_C3q5OUN8YdYpGkcajXOFTxcxFPAhSILk0o0kAV6yPPpS95njubGkYxps6N-djz6wcBAjDMgEmucRzQ0MZLJamoy2JG-wh3lNahexDh6T1xdhLFa8AjLDPh_UyagbVxG5SGRqqEQM9DYya5xC4hMWYKnI4KZCe57apAkLW4p5DpLn4R0xs1ORi2plOhRlsL2HfRwXJj4vPd9wR_zH4X9nCr_9x2XXHyTmOFzv_3I5V0roVq1fayTQF7aRI6RdgZWNJxfuMDalkpyuBXT1_Q&ci-process=originImage" alt="头像" class="avatar">
+                <img src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/Xnip2025-07-25_17-22-54.jpg?q-sign-algorithm=sha1&q-ak=AKID_WWMhtOFDJKbnbYMBVVE85mX017e0PeEifJHy0iZwaalLL2GhpwRWoBNVwv3cboQ&q-sign-time=1753435401;1753439001&q-key-time=1753435401;1753439001&q-header-list=host&q-url-param-list=ci-process&q-signature=66962a9a0b02bf0d6dce88a3ecc849b12783502a&x-cos-security-token=9pMMpysaxa0VWi6dLsEHqfSkhyL4UzGa29d16f708a73db5769360d6e00ee538bjBX_C3q5OUN8YdYpGkcajXOFTxcxFPAhSILk0o0kAV6yPPpS95njubGkYxps6N-djz6wcBAjDMgEmucRzQ0MZLJamoy2JG-wh3lNahexDh6T1xdhLFa8AjLDPh_UyagbVxG5SGRqqEQM9DYya5xC4hMWYKnI4KZCe57apAkLW4p5DpLn4R0xs1ORi2plOhRlsL2HfRwXJj4vPd9wR_zH4X9nCr_9x2XXHyTmOFzv_3I5V0roVq1fayTQF7aRI6RdgZWNJxfuMDalkpyuBXT1_Q&ci-process=originImage"
+                    alt="头像" class="avatar">
                 <h1 class="name">白东旭</h1>
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <span>📧</span>
-                        <span>dongxu.bai@qq.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <span>📱</span>
-                        <span>13520015521</span>
-                    </div>
-                    <div class="contact-item">
-                        <span>📍</span>
-                        <span>北京</span>
-                    </div>
+                    <span><i class="icon">📧</i> dongxu.bai@qq.com</span>
+                    <span><i class="icon">📞</i> 13520015521</span>
+                    <span><i class="icon">📍</i> 北京</span>
                 </div>
-                <p class="status" style="color: #ffffff; font-weight: 600; margin-top: 0.5rem;">在职，考虑机会 | 25k-28k</p>
-
-            </div>
-
-            <!-- 个人简介 -->
-            <div class="section">
-                <h2 class="section-title">💫 个人简介</h2>
-                <div style="color: #4a5568; line-height: 1.8; font-size: 1.05rem;">
-                    <p style="margin-bottom: 1rem;"><strong>多年互联网企业产品运营工作经验</strong>，专注于用户研究与产品策划，对数据和用户敏感，能以数据为驱动进行用户体验优化和产品策划。</p>
-                    
-                    <p style="margin-bottom: 1rem;"><strong>精通产品与运营全链路工具矩阵</strong>，熟练运用思维导图工具梳理业务逻辑、原型工具搭建交互框架，通过各类数据分析工具深度挖掘业务数据价值。</p>
-                    
-                    <p style="margin-bottom: 1.5rem;"><strong>尤其擅长将AI工具深度融入工作场景</strong>，曾主导Cursor工具在集团内的普及应用，输出爆款教程并助力业务斩获创新大奖，以技术提效赋能产品全生命周期管理。</p>
-                    
-
-                </div>
-            </div>
-
-            <!-- 工作经历 -->
-            <div class="section">
-                <h2 class="section-title">💼 工作经历</h2>
-                
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <div class="job-title">资深产品运营工程师</div>
-                            <div class="company">北京世纪好未来教育科技有限公司 · 智慧课堂 · 产品中心</div>
-                        </div>
-                        <div class="duration">2022.12 - 至今</div>
-                    </div>
-                    <div class="job-description">
-                        <strong>• 大班云运营体系搭建与迭代支撑：</strong>主导搭建大班云整体运营体系，持续创建并迭代各端跟版维护文档及全平台发版公告，通过标准化文档体系保障跨部门信息同步效率，支撑业务全年稳定迭代<br><br>
-                        <strong>• 直播后台管控：</strong>负责「直播管理后台」全生命周期管控，统筹测试、灰度及线上环境历次迭代的插件配置工作，精准把控环境切换节点，保障直播业务零重大故障运行<br><br>
-                        <strong>• 互动数据自动化建设：</strong>针对课堂主讲互动发起数据维护场景，自主开发Python自动化脚本，替代人工更新流程，将数据更新效率提升80%<br><br>
-                        <strong>• Cursor工具深度应用：</strong>作为集团内Cursor工具应用先行者，撰写《更适合非研发岗食用的 Cursor教程》《Cursor进阶：Figma MCP Server》，发布后迅速覆盖全集团。基于Cursor工具助力业务侧落地多项创新成果：协助搭建数据看板支撑业务团队斩获创新产品大赛一等奖；制作高保真产品demo，缩短开发周期30%
-                    </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <div class="job-title">高级产品运营</div>
-                            <div class="company">启客(北京)科技有限公司 · 产品中心</div>
-                        </div>
-                        <div class="duration">2021.04 - 2022.12</div>
-                    </div>
-                    <div class="job-description">
-                        <strong>• 联络中心线：</strong>从0到1负责整体通讯项目的产品运营、产品策划、问题定位处理及落地培训工作，包括硬件话机、sip软电话条、呼叫检测、AXB通讯、AI外呼等多个产品线<br><br>
-                        <strong>• 金融助贷产品：</strong>主导策划垂类行业解决方案，解决金融行业实际业务场景下存在的痛点问题，上线1个月产生20w+回款<br><br>
-                        <strong>• 销售助手线：</strong>负责国内外实时辅助、离线数据分析头部厂商产品逻辑及商业逻辑调研，协助产品完成产品设计，负责产品整体功能手册及业务端培训
-                    </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <div class="job-title">B端产品运营</div>
-                            <div class="company">深圳市加推科技有限公司 · SaaS产品事业部</div>
-                        </div>
-                        <div class="duration">2019.05 - 2021.04</div>
-                    </div>
-                    <div class="job-description">
-                        <strong>• 视频内容策划制作：</strong>负责视频内容策划、拍摄、剪辑，建立《加推加油站》《更新直通车》，共完成79条视频小剧本，实现内容播放量超100K<br><br>
-                        <strong>• 培训与活动策划：</strong>负责新人及产品功能前后端初级、进阶培训，最大培训人数超2000（线上+线下），好评率97%；主导3个线上专题活动的策划、执行、复盘，获取新客户1000+，对比同期提升70%<br><br>
-                        <strong>• 产品运营管理：</strong>负责运营商后台初期功能线上化的产品规划、页面及功能设计；负责检测、分析、整理业务部门及代理商的行为数据、业务数据，为产品和运营策略制定提供有效数据支持
-                    </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <div class="job-title">商家运营</div>
-                            <div class="company">美团网 · 简约住宿事业部</div>
-                        </div>
-                        <div class="duration">2017.09 - 2019.05</div>
-                    </div>
-                    <div class="job-description">
-                        <strong>• 商家运营优化：</strong>协助商家做酒店运营，通过数据分析以及酒店实际情况给出合理的阶段性策略，提升酒店间夜30%<br><br>
-                        <strong>• 产品需求挖掘：</strong>在商家运营过程中发现用户需求，分析后提交至产品组，需求通过率70%<br><br>
-                        <strong>• 商家培训讲师：</strong>让商家更快的理解美团酒店规则、操作Eb后台、培养商家行为习惯；通过市场及销售数据分析各城市、区域问题，结合销售、商家反馈，优化商家定价方案
-                    </div>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div>
-                            <div class="job-title">OTA产品运营</div>
-                            <div class="company">去哪儿网 · 国际机票事业群</div>
-                        </div>
-                        <div class="duration">2015.08 - 2017.09</div>
-                    </div>
-                    <div class="job-description">
-                        <strong>• 代理商管理：</strong>负责国际机票2k+代理商IATA&资质前端展示维护；负责代理商后台管理、产品更新维护、数据追踪和分析<br><br>
-                        <strong>• 流程优化建设：</strong>组建赔付组，建立赔付流程与规则，降低42%赔付率<br><br>
-                        <strong>• 产品优化支持：</strong>处理代理商提交的系统问题，解答并深度挖掘，输出需求文档；对NTS系统项目上线后半年进行跟踪分析，输出报告
-                    </div>
-                </div>
-            </div>
-
-            <!-- 技能专长 -->
-            <div class="section">
-                <h2 class="section-title">💡 专业技能</h2>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">AI工具应用</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Cursor</span>
-                            <span class="skill-tag">ChatGPT</span>
-                            <span class="skill-tag">MCP Server</span>
-                            <span class="skill-tag">Python自动化</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">产品工具</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">PRD</span>
-                            <span class="skill-tag">Axure</span>
-                            <span class="skill-tag">Sketch</span>
-                            <span class="skill-tag">Figma</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">数据分析</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">数据挖掘</span>
-                            <span class="skill-tag">用户研究</span>
-                            <span class="skill-tag">业务分析</span>
-                            <span class="skill-tag">数据可视化</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">内容制作</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Final Cut Pro</span>
-                            <span class="skill-tag">视频制作</span>
-                            <span class="skill-tag">培训讲师</span>
-                            <span class="skill-tag">项目管理</span>
-                            <span class="skill-tag">内容策划</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 教育背景 -->
-            <div class="section">
-                <h2 class="section-title">🎓 教育背景</h2>
-                
-                <div class="education-item">
-                    <div class="education-title">动漫设计制作 本科</div>
-                    <div class="education-school">北京翻译研修学院</div>
-                    <div class="education-year">2011.09 - 2015.07</div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">🎓 兴趣爱好</h2>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎮 主机游戏</span>
-                    <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎣 钓鱼</span>
+                <div class="job-status">
+                    在职，考虑机会 | <strong>25k-28k</strong>
                 </div>
             </div>
         </header>
+
+        <main>
+            <section id="summary">
+                <h2 class="section-title">个人简介</h2>
+                <p>多年互联网企业产品运营工作经验，专注于用户研究与产品策划，对数据和用户敏感，能以数据为驱动进行用户体验优化和产品策划。</p>
+                <p>精通产品与运营全链路工具矩阵，熟练运用思维导图工具梳理业务逻辑、原型工具搭建交互框架，通过各类数据分析工具深度挖掘业务数据价值。</p>
+                <p>尤其擅长将AI工具深度融入工作场景，曾主导Cursor工具在集团内的普及应用，输出爆款教程并助力业务斩获创新大奖，以技术提效赋能产品全生命周期管理。</p>
+            </section>
+
+            <section id="experience">
+                <h2 class="section-title">工作经历</h2>
+                <!-- Experience items will be injected here -->
+            </section>
+
+            <section id="skills">
+                <h2 class="section-title">专业技能</h2>
+                <div class="skills-grid">
+                    <!-- Skill categories will be injected here -->
+                </div>
+            </section>
+
+            <section id="education">
+                <h2 class="section-title">教育背景</h2>
+                <div class="education-item">
+                    <div class="education-school">北京翻译研修学院</div>
+                    <div class="education-details">动漫设计制作 本科 (2011.09 - 2015.07)</div>
+                </div>
+            </section>
+        </main>
     </div>
+    <script>
+        const experiences = [{
+            title: "资深产品运营工程师",
+            company: "北京世纪好未来教育科技有限公司 · 智慧课堂 · 产品中心",
+            date: "2022.12 - 至今",
+            description: [
+                "<strong>大班云运营体系搭建与迭代支撑：</strong>主导搭建大班云整体运营体系，持续创建并迭代各端跟版维护文档及全平台发版公告，通过标准化文档体系保障跨部门信息同步效率，支撑业务<span class='highlight'>全年稳定迭代</span>",
+                "<strong>直播后台管控：</strong>负责「直播管理后台」全生命周期管控，统筹测试、灰度及线上环境历次迭代的插件配置工作，精准把控环境切换节点，保障直播业务<span class='highlight'>零重大故障运行</span>",
+                "<strong>互动数据自动化建设：</strong>针对课堂主讲互动发起数据维护场景，自主开发Python自动化脚本，替代人工更新流程，将数据更新效率提升<span class='highlight'>80%</span>",
+                "<strong>Cursor工具深度应用：</strong>作为集团内Cursor工具应用先行者，撰写《更适合非研发岗食用的 Cursor教程》《Cursor进阶：Figma MCP Server》，发布后迅速覆盖全集团。基于Cursor工具助力业务侧落地多项创新成果：协助搭建数据看板支撑业务团队斩获<span class='highlight'>创新产品大赛一等奖</span>；制作高保真产品demo，缩短开发周期<span class='highlight'>30%</span>"
+            ]
+        }, {
+            title: "高级产品运营",
+            company: "启客(北京)科技有限公司 · 产品中心",
+            date: "2021.04 - 2022.12",
+            description: [
+                "<strong>联络中心线：</strong>从0到1负责整体通讯项目的产品运营、产品策划、问题定位处理及落地培训工作，包括硬件话机、sip软电话条、呼叫检测、AXB通讯、AI外呼等多个产品线",
+                "<strong>金融助贷产品：</strong>主导策划垂类行业解决方案，解决金融行业实际业务场景下存在的痛点问题，上线<span class='highlight'>1个月</span>产生<span class='highlight'>20w+</span>回款",
+                "<strong>销售助手线：</strong>负责国内外实时辅助、离线数据分析头部厂商产品逻辑及商业逻辑调研，协助产品完成产品设计，负责产品整体功能手册及业务端培训"
+            ]
+        }, {
+            title: "B端产品运营",
+            company: "深圳市加推科技有限公司 · SaaS产品事业部",
+            date: "2019.05 - 2021.04",
+            description: [
+                "<strong>视频内容策划制作：</strong>负责视频内容策划、拍摄、剪辑，建立《加推加油站》《更新直通车》，共完成<span class='highlight'>79条</span>视频小剧本，实现内容播放量超<span class='highlight'>100K</span>",
+                "<strong>培训与活动策划：</strong>负责新人及产品功能前后端初级、进阶培训，最大培训人数超<span class='highlight'>2000</span>（线上+线下），好评率<span class='highlight'>97%</span>；主导<span class='highlight'>3个</span>线上专题活动的策划、执行、复盘，获取新客户<span class='highlight'>1000+</span>，对比同期提升<span class='highlight'>70%</span>",
+                "<strong>产品运营管理：</strong>负责运营商后台初期功能线上化的产品规划、页面及功能设计；负责检测、分析、整理业务部门及代理商的行为数据、业务数据，为产品和运营策略制定提供有效数据支持"
+            ]
+        }, {
+            title: "商家运营",
+            company: "美团网 · 简约住宿事业部",
+            date: "2017.09 - 2019.05",
+            description: [
+                "<strong>商家运营优化：</strong>协助商家做酒店运营，通过数据分析以及酒店实际情况给出合理的阶段性策略，提升酒店间夜<span class='highlight'>30%</span>",
+                "<strong>产品需求挖掘：</strong>在商家运营过程中发现用户需求，分析后提交至产品组，需求通过率<span class='highlight'>70%</span>",
+                "<strong>商家培训讲师：</strong>让商家更快的理解美团酒店规则、操作Eb后台、培养商家行为习惯；通过市场及销售数据分析各城市、区域问题，结合销售、商家反馈，优化商家定价方案"
+            ]
+        }, {
+            title: "OTA产品运营",
+            company: "去哪儿网 · 国际机票事业群",
+            date: "2015.08 - 2017.09",
+            description: [
+                "<strong>代理商管理：</strong>负责国际机票<span class='highlight'>2k+</span>代理商IATA&资质前端展示维护；负责代理商后台管理、产品更新维护、数据追踪和分析",
+                "<strong>流程优化建设：</strong>组建赔付组，建立赔付流程与规则，降低<span class='highlight'>42%</span>赔付率",
+                "<strong>产品优化支持：</strong>处理代理商提交的系统问题，解答并深度挖掘，输出需求文档；对NTS系统项目上线后半年进行跟踪分析，输出报告"
+            ]
+        }];
+
+        const skills = [{
+            category: "AI工具应用",
+            icon: "🤖",
+            theme: "ai",
+            tags: ["Cursor", "ChatGPT", "MCP Server", "Python自动化"]
+        }, {
+            category: "产品工具",
+            icon: "🛠️",
+            theme: "product",
+            tags: ["PRD", "Axure", "Sketch", "Figma"]
+        }, {
+            category: "数据分析",
+            icon: "📊",
+            theme: "data",
+            tags: ["SQL", "数据挖掘", "用户研究", "业务分析", "数据可视化"]
+        }, {
+            category: "内容制作",
+            icon: "🎬",
+            theme: "media",
+            tags: ["Final Cut Pro", "视频制作", "培训讲师", "项目管理"]
+        }, ];
+
+        function renderExperience() {
+            const experienceSection = document.getElementById('experience');
+            experiences.forEach(exp => {
+                const experienceItem = document.createElement('div');
+                experienceItem.classList.add('experience-item');
+
+                let descriptionHtml = '<ul>';
+                exp.description.forEach(desc => {
+                    descriptionHtml += `<li>${desc}</li>`;
+                });
+                descriptionHtml += '</ul>';
+
+                experienceItem.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                        <h3 style="margin-right: 1rem;">${exp.title}</h3>
+                        <span class="date">${exp.date}</span>
+                    </div>
+                    <p style="color: #4a5568; margin-bottom: 10px;">${exp.company}</p>
+                    <div class="job-description">${descriptionHtml}</div>
+                `;
+                experienceSection.appendChild(experienceItem);
+            });
+        }
+
+        function renderSkills() {
+            const skillsGrid = document.querySelector('.skills-grid');
+            skills.forEach(skill => {
+                const skillCategory = document.createElement('div');
+                skillCategory.classList.add('skill-category');
+
+                let tagsHtml = '';
+                skill.tags.forEach(tag => {
+                    tagsHtml += `<span class="skill-tag ${skill.theme}">${tag}</span>`;
+                });
+
+                skillCategory.innerHTML = `
+                    <h4>${skill.icon} ${skill.category}</h4>
+                    <div class="skill-tags">${tagsHtml}</div>
+                `;
+                skillsGrid.appendChild(skillCategory);
+            });
+        }
+
+        renderExperience();
+        renderSkills();
+    </script>
 </body>
+
 </html> 
