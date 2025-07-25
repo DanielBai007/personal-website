@@ -95,21 +95,23 @@
             text-align: center;
         }
 
-        .profile-image {
+        .header-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        .avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 20px;
             border: 4px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
         }
 
         .name {
-            font-size: 2.5rem;
+            font-size: 36px;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
@@ -312,15 +314,10 @@
     </nav>
 
     <div class="container">
-        <div class="resume-card">
-            <!-- 个人信息头部 -->
-            <div class="header-section">
-                <div class="profile-image">
-                    👨‍💼
-                </div>
+        <header>
+            <div class="header-content">
+                <img src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/Xnip2025-07-25_17-22-54.jpg?q-sign-algorithm=sha1&q-ak=AKID_WWMhtOFDJKbnbYMBVVE85mX017e0PeEifJHy0iZwaalLL2GhpwRWoBNVwv3cboQ&q-sign-time=1753435401;1753439001&q-key-time=1753435401;1753439001&q-header-list=host&q-url-param-list=ci-process&q-signature=66962a9a0b02bf0d6dce88a3ecc849b12783502a&x-cos-security-token=9pMMpysaxa0VWi6dLsEHqfSkhyL4UzGa29d16f708a73db5769360d6e00ee538bjBX_C3q5OUN8YdYpGkcajXOFTxcxFPAhSILk0o0kAV6yPPpS95njubGkYxps6N-djz6wcBAjDMgEmucRzQ0MZLJamoy2JG-wh3lNahexDh6T1xdhLFa8AjLDPh_UyagbVxG5SGRqqEQM9DYya5xC4hMWYKnI4KZCe57apAkLW4p5DpLn4R0xs1ORi2plOhRlsL2HfRwXJj4vPd9wR_zH4X9nCr_9x2XXHyTmOFzv_3I5V0roVq1fayTQF7aRI6RdgZWNJxfuMDalkpyuBXT1_Q&ci-process=originImage" alt="头像" class="avatar">
                 <h1 class="name">白东旭</h1>
-                <p class="title">资深产品运营工程师 · AI工具应用专家</p>
-                <p class="status" style="color: #F2416B; font-weight: 600; margin-top: 0.5rem;">在职，考虑机会 | 25k-28k</p>
                 <div class="contact-info">
                     <div class="contact-item">
                         <span>📧</span>
@@ -335,25 +332,21 @@
                         <span>北京</span>
                     </div>
                 </div>
+                <p class="status" style="color: #ffffff; font-weight: 600; margin-top: 0.5rem;">在职，考虑机会 | 25k-28k</p>
+
             </div>
 
             <!-- 个人简介 -->
             <div class="section">
                 <h2 class="section-title">💫 个人简介</h2>
                 <div style="color: #4a5568; line-height: 1.8; font-size: 1.05rem;">
-                    <p style="margin-bottom: 1rem;"><strong>5年以上互联网企业产品运营工作经验</strong>，专注于用户研究与产品策划，对数据和用户敏感，能以数据为驱动进行用户体验优化和产品策划。</p>
+                    <p style="margin-bottom: 1rem;"><strong>多年互联网企业产品运营工作经验</strong>，专注于用户研究与产品策划，对数据和用户敏感，能以数据为驱动进行用户体验优化和产品策划。</p>
                     
                     <p style="margin-bottom: 1rem;"><strong>精通产品与运营全链路工具矩阵</strong>，熟练运用思维导图工具梳理业务逻辑、原型工具搭建交互框架，通过各类数据分析工具深度挖掘业务数据价值。</p>
                     
                     <p style="margin-bottom: 1.5rem;"><strong>尤其擅长将AI工具深度融入工作场景</strong>，曾主导Cursor工具在集团内的普及应用，输出爆款教程并助力业务斩获创新大奖，以技术提效赋能产品全生命周期管理。</p>
                     
-                    <div style="margin-top: 1.5rem;">
-                        <h3 style="color: #2d3748; font-size: 1.1rem; margin-bottom: 0.8rem;">🎯 兴趣爱好</h3>
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎮 主机游戏</span>
-                            <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎣 钓鱼</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -365,15 +358,15 @@
                     <div class="experience-header">
                         <div>
                             <div class="job-title">资深产品运营工程师</div>
-                            <div class="company">北京世纪好未来教育科技有限公司 · 智慧课堂</div>
+                            <div class="company">北京世纪好未来教育科技有限公司 · 智慧课堂 · 产品中心</div>
                         </div>
                         <div class="duration">2022.12 - 至今</div>
                     </div>
                     <div class="job-description">
                         <strong>• 大班云运营体系搭建与迭代支撑：</strong>主导搭建大班云整体运营体系，持续创建并迭代各端跟版维护文档及全平台发版公告，通过标准化文档体系保障跨部门信息同步效率，支撑业务全年稳定迭代<br><br>
                         <strong>• 直播后台管控：</strong>负责「直播管理后台」全生命周期管控，统筹测试、灰度及线上环境历次迭代的插件配置工作，精准把控环境切换节点，保障直播业务零重大故障运行<br><br>
-                        <strong>• 互动数据自动化建设：</strong>针对课堂主讲互动发起数据维护场景，自主开发Python自动化脚本，替代人工更新流程，将<span style="color: #F2416B; font-weight: 600;">数据更新效率提升80%</span><br><br>
-                        <strong>• Cursor工具深度应用：</strong>作为集团内Cursor工具应用先行者，撰写《更适合非研发岗食用的 Cursor教程》《Cursor进阶：Figma MCP Server》，发布后迅速覆盖全集团。基于Cursor工具助力业务侧落地多项创新成果：协助搭建数据看板支撑业务团队斩获<span style="color: #F2416B; font-weight: 600;">创新产品大赛一等奖</span>；制作高保真产品demo，<span style="color: #F2416B; font-weight: 600;">缩短开发周期30%</span>
+                        <strong>• 互动数据自动化建设：</strong>针对课堂主讲互动发起数据维护场景，自主开发Python自动化脚本，替代人工更新流程，将数据更新效率提升80%<br><br>
+                        <strong>• Cursor工具深度应用：</strong>作为集团内Cursor工具应用先行者，撰写《更适合非研发岗食用的 Cursor教程》《Cursor进阶：Figma MCP Server》，发布后迅速覆盖全集团。基于Cursor工具助力业务侧落地多项创新成果：协助搭建数据看板支撑业务团队斩获创新产品大赛一等奖；制作高保真产品demo，缩短开发周期30%
                     </div>
                 </div>
 
@@ -387,7 +380,7 @@
                     </div>
                     <div class="job-description">
                         <strong>• 联络中心线：</strong>从0到1负责整体通讯项目的产品运营、产品策划、问题定位处理及落地培训工作，包括硬件话机、sip软电话条、呼叫检测、AXB通讯、AI外呼等多个产品线<br><br>
-                        <strong>• 金融助贷产品：</strong>主导策划垂类行业解决方案，解决金融行业实际业务场景下存在的痛点问题，<span style="color: #F2416B; font-weight: 600;">上线1个月产生20w+回款</span><br><br>
+                        <strong>• 金融助贷产品：</strong>主导策划垂类行业解决方案，解决金融行业实际业务场景下存在的痛点问题，上线1个月产生20w+回款<br><br>
                         <strong>• 销售助手线：</strong>负责国内外实时辅助、离线数据分析头部厂商产品逻辑及商业逻辑调研，协助产品完成产品设计，负责产品整体功能手册及业务端培训
                     </div>
                 </div>
@@ -401,8 +394,8 @@
                         <div class="duration">2019.05 - 2021.04</div>
                     </div>
                     <div class="job-description">
-                        <strong>• 视频内容策划制作：</strong>负责视频内容策划、拍摄、剪辑，建立《加推加油站》《更新直通车》，<span style="color: #F2416B; font-weight: 600;">共完成79条视频小剧本，实现内容播放量超100K</span><br><br>
-                        <strong>• 培训与活动策划：</strong>负责新人及产品功能前后端初级、进阶培训，最大培训人数超2000（线上+线下），好评率97%；主导3个线上专题活动的策划、执行、复盘，<span style="color: #F2416B; font-weight: 600;">获取新客户1000+，对比同期提升70%</span><br><br>
+                        <strong>• 视频内容策划制作：</strong>负责视频内容策划、拍摄、剪辑，建立《加推加油站》《更新直通车》，共完成79条视频小剧本，实现内容播放量超100K<br><br>
+                        <strong>• 培训与活动策划：</strong>负责新人及产品功能前后端初级、进阶培训，最大培训人数超2000（线上+线下），好评率97%；主导3个线上专题活动的策划、执行、复盘，获取新客户1000+，对比同期提升70%<br><br>
                         <strong>• 产品运营管理：</strong>负责运营商后台初期功能线上化的产品规划、页面及功能设计；负责检测、分析、整理业务部门及代理商的行为数据、业务数据，为产品和运营策略制定提供有效数据支持
                     </div>
                 </div>
@@ -416,8 +409,8 @@
                         <div class="duration">2017.09 - 2019.05</div>
                     </div>
                     <div class="job-description">
-                        <strong>• 商家运营优化：</strong>协助商家做酒店运营，通过数据分析以及酒店实际情况给出合理的阶段性策略，<span style="color: #F2416B; font-weight: 600;">提升酒店间夜30%</span><br><br>
-                        <strong>• 产品需求挖掘：</strong>在商家运营过程中发现用户需求，分析后提交至产品组，<span style="color: #F2416B; font-weight: 600;">需求通过率70%</span><br><br>
+                        <strong>• 商家运营优化：</strong>协助商家做酒店运营，通过数据分析以及酒店实际情况给出合理的阶段性策略，提升酒店间夜30%<br><br>
+                        <strong>• 产品需求挖掘：</strong>在商家运营过程中发现用户需求，分析后提交至产品组，需求通过率70%<br><br>
                         <strong>• 商家培训讲师：</strong>让商家更快的理解美团酒店规则、操作Eb后台、培养商家行为习惯；通过市场及销售数据分析各城市、区域问题，结合销售、商家反馈，优化商家定价方案
                     </div>
                 </div>
@@ -432,7 +425,7 @@
                     </div>
                     <div class="job-description">
                         <strong>• 代理商管理：</strong>负责国际机票2k+代理商IATA&资质前端展示维护；负责代理商后台管理、产品更新维护、数据追踪和分析<br><br>
-                        <strong>• 流程优化建设：</strong>组建赔付组，建立赔付流程与规则，<span style="color: #F2416B; font-weight: 600;">降低42%赔付率</span><br><br>
+                        <strong>• 流程优化建设：</strong>组建赔付组，建立赔付流程与规则，降低42%赔付率<br><br>
                         <strong>• 产品优化支持：</strong>处理代理商提交的系统问题，解答并深度挖掘，输出需求文档；对NTS系统项目上线后半年进行跟踪分析，输出报告
                     </div>
                 </div>
@@ -449,7 +442,6 @@
                             <span class="skill-tag">ChatGPT</span>
                             <span class="skill-tag">MCP Server</span>
                             <span class="skill-tag">Python自动化</span>
-                            <span class="skill-tag">知识Agent</span>
                         </div>
                     </div>
                     
@@ -460,7 +452,6 @@
                             <span class="skill-tag">Axure</span>
                             <span class="skill-tag">Sketch</span>
                             <span class="skill-tag">Figma</span>
-                            <span class="skill-tag">原型设计</span>
                         </div>
                     </div>
                     
@@ -476,7 +467,7 @@
                     </div>
                     
                     <div class="skill-category">
-                        <h3 class="skill-category-title">多媒体制作</h3>
+                        <h3 class="skill-category-title">内容制作</h3>
                         <div class="skill-tags">
                             <span class="skill-tag">Final Cut Pro</span>
                             <span class="skill-tag">视频制作</span>
@@ -499,8 +490,14 @@
                 </div>
             </div>
 
-
-        </div>
+            <div class="section">
+                <h2 class="section-title">🎓 兴趣爱好</h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎮 主机游戏</span>
+                    <span style="background: #667eea; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem;">🎣 钓鱼</span>
+                </div>
+            </div>
+        </header>
     </div>
 </body>
 </html> 
