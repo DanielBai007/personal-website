@@ -71,105 +71,140 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
             margin-top: 80px;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        .project-image {
-            height: 200px;
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+        }
+
+        .hero-section {
+            text-align: center;
             color: white;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #2d3748;
-        }
-
-        .project-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .project-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
             width: 100%;
         }
 
-        .project-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        .hero-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .hero-button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 2px solid transparent;
+        }
+
+        .hero-button.primary:hover {
+            background: linear-gradient(135deg, #7c8df1 0%, #8456b8 100%);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .button-icon {
+            font-size: 1.2rem;
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .container {
                 padding: 1rem;
+                margin-top: 70px;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+            }
+            
+            .hero-button {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
             }
         }
     </style>
@@ -182,83 +217,43 @@
                 <span>💼 个人网站</span>
             </div>
             <div class="nav-menu">
-                <a href="index.html" class="nav-link active">项目展示</a>
+                <a href="index.html" class="nav-link active">首页</a>
+                <a href="portfolio.html" class="nav-link">作品展示</a>
                 <a href="resume.html" class="nav-link">个人简历</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
-        <header class="header">
-            <h1>🚀 个人项目展示</h1>
-            <p>探索创新技术，展现编程艺术</p>
-        </header>
-
-        <div class="projects-grid">
-            <div class="project-card" onclick="openProject('satisfaction-dashboard')">
-                <div class="project-image" style="background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);">
-                    📊
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">讲次评价分析平台</h3>
-                    <p class="project-description">
-                        智能化的教学评价数据分析工具，提供可视化图表、趋势分析和深度洞察，
-                        帮助教师和管理者了解教学质量和学生满意度。
-                    </p>
-                    <button class="project-button">查看项目详情</button>
-                </div>
-            </div>
-
-            <div class="project-card" onclick="openProject('gesture-master')">
-                <div class="project-image" style="background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);">
-                    👋
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">手势大师</h3>
-                    <p class="project-description">
-                        基于AI的手势识别交互系统，使用MediaPipe技术实现实时手势检测，
-                        支持多种手势控制和3D模型交互体验。
-                    </p>
-                    <button class="project-button">体验手势控制</button>
-                </div>
-            </div>
-
-            <div class="project-card" onclick="openProject('digital-pet')">
-                <div class="project-image" style="background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%);">
-                    🐱
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">数字宠物屏保</h3>
-                    <p class="project-description">
-                        可爱的数字宠物屏保程序，提供多种宠物角色选择、互动功能和个性化设置，
-                        让您的桌面充满生活情趣。
-                    </p>
-                    <button class="project-button">启动数字宠物</button>
-                </div>
+        <div class="hero-section">
+            <h1 class="hero-title">白先生的数字世界</h1>
+            <p class="hero-subtitle">全栈开发工程师 · 产品设计师 · 创新技术探索者<br>用代码创造美好，用技术改变世界</p>
+            
+            <div class="hero-buttons">
+                <a href="resume.html" class="hero-button primary">
+                    <span class="button-icon">📄</span>
+                    <span>个人简历</span>
+                </a>
+                <a href="portfolio.html" class="hero-button">
+                    <span class="button-icon">🚀</span>
+                    <span>作品展示</span>
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        function openProject(projectId) {
-            // 跳转到项目详情页面
-            window.location.href = `./portfolio/${projectId}.html`;
-        }
-
-        // 添加一些交互效果
+        // 添加简单的页面加载动画
         document.addEventListener('DOMContentLoaded', function() {
-            // 为卡片添加平滑的入场动画
-            const cards = document.querySelectorAll('.project-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
+            const heroSection = document.querySelector('.hero-section');
+            heroSection.style.opacity = '0';
+            heroSection.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                heroSection.style.transition = 'opacity 1s ease, transform 1s ease';
+                heroSection.style.opacity = '1';
+                heroSection.style.transform = 'translateY(0)';
+            }, 300);
         });
     </script>
 </body>
