@@ -108,89 +108,56 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
-            margin-top: 3rem;
         }
 
         .project-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E2E8F0;
         }
 
         .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-        }
-
-        .project-image {
-            height: 220px;
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4.5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .project-card:hover .project-image::before {
-            left: 100%;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         .project-content {
-            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
 
         .project-title {
-            font-size: 1.6rem;
+            font-size: 1.75rem;
             font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: #2d3748;
+            color: #1a202c;
+            margin-bottom: 1rem;
         }
 
         .project-description {
-            color: #4a5568;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .project-button {
-            background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
-            color: white;
-            border: none;
-            padding: 0.9rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
             font-size: 1rem;
+            color: #4A5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        .project-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 150, 255, 0.4);
-            background: linear-gradient(97deg, #1aa3ff, #c470ff 42%, #f54d78 74%, #f28419);
+        .project-link {
+            color: #3182CE;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -230,7 +197,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span>💼 个人网站</span>
+                <span>个人小站</span>
             </div>
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">首页</a>
@@ -242,59 +209,52 @@
 
     <div class="container">
         <header class="page-header">
-            <h1 class="page-title">🚀 精选作品</h1>
+            <h1 class="page-title">精选作品</h1>
             <p class="page-subtitle">探索创新技术，展现编程艺术</p>
         </header>
 
-        <div class="projects-grid">
-            <div class="project-card" onclick="openProject('satisfaction-dashboard')">
-                <div class="project-image" style="background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);">
-                    📊
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">讲次评价分析平台</h3>
-                    <p class="project-description">
-                        智能化的教学评价数据分析工具，提供可视化图表、趋势分析和深度洞察，
-                        帮助教师和管理者了解教学质量和学生满意度。支持多维度数据处理和实时分析。
-                    </p>
-                    <button class="project-button">查看项目详情</button>
-                </div>
-            </div>
-
-            <div class="project-card" onclick="openProject('gesture-master')">
-                <div class="project-image" style="background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);">
-                    👋
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">手势大师</h3>
-                    <p class="project-description">
-                        基于AI的手势识别交互系统，使用MediaPipe技术实现实时手势检测，
-                        支持多种手势控制和3D模型交互体验。展现前沿AI技术与Web开发的完美结合。
-                    </p>
-                    <button class="project-button">体验手势控制</button>
-                </div>
-            </div>
-
-            <div class="project-card" onclick="openProject('digital-pet')">
-                <div class="project-image" style="background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%);">
-                    🐱
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">数字宠物屏保</h3>
-                    <p class="project-description">
-                        可爱的数字宠物屏保程序，提供多种宠物角色选择、互动功能和个性化设置，
-                        让您的桌面充满生活情趣。注重用户体验和动画细节的精心设计。
-                    </p>
-                    <button class="project-button">启动数字宠物</button>
-                </div>
-            </div>
+        <div class="projects-grid" id="projects-grid">
+            <!-- Projects will be dynamically inserted here -->
         </div>
     </div>
 
     <script>
-        function openProject(projectId) {
-            // 跳转到项目详情页面
-            window.location.href = `./portfolio/${projectId}.html`;
+        const portfolioItems = [
+            {
+                title: '讲次评价分析平台',
+                description: '智能分析学生课程评价数据，提供多维度可视化分析报告',
+                slug: 'satisfaction-dashboard'
+            },
+            {
+                title: '手势大师',
+                description: '基于计算机视觉的手势识别系统',
+                slug: 'gesture-master'
+            },
+            {
+                title: '数字宠物屏保',
+                description: '可爱的桌面宠物伴侣',
+                slug: 'digital-pet'
+            },
+            {
+                title: '听写demo',
+                description: '语音识别听写练习工具',
+                slug: 'dictation-demo'
+            }
+        ];
+
+        const grid = document.getElementById('projects-grid');
+        if (grid) {
+            grid.innerHTML = portfolioItems.map(item => `
+                <a href="./portfolio/${item.slug}.html" class="project-card">
+                    <div class="project-content">
+                        <div>
+                            <h3 class="project-title">${item.title}</h3>
+                            <p class="project-description">${item.description}</p>
+                        </div>
+                        <span class="project-link">查看详情 &gt;</span>
+                    </div>
+                </a>
+            `).join('');
         }
 
         // 添加页面加载动画

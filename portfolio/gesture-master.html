@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>手势大师 - 项目详情</title>
+    <title>项目详情 - 手势大师</title>
     <style>
+        /* Base styles from portfolio.html for consistency */
         * {
             margin: 0;
             padding: 0;
@@ -13,307 +14,143 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: #0A0A0A;
             min-height: 100vh;
-            overflow: hidden;
+            color: #333;
         }
 
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            z-index: 1000;
-            transition: all 0.3s ease;
+        .navbar {
+            background: #202937;
             backdrop-filter: blur(10px);
-        }
-
-        .back-button:hover {
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .loader-container {
+            padding: 1rem 0;
             position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+        }
+
+        /* Project detail specific styles */
+        .project-detail-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .project-detail-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background-image: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #2BD2FF;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 80vh; /* 80% of viewport height */
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .iframe-container iframe {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader-content {
-            text-align: center;
-            color: #2d3748;
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        .loader-spinner {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .spinner-ring {
-            width: 100%;
-            height: 100%;
-            border: 4px solid rgba(45, 55, 72, 0.2);
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .spinner-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
-        .loader-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .loader-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-            color: #4a5568;
-        }
-
-        .progress-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 2rem auto;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            width: 0%;
-        }
-
-        .features-box {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .features-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #2d3748;
-        }
-
-        .features-list {
-            list-style: none;
-            text-align: left;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
-            color: #4a5568;
-        }
-
-        .feature-check {
-            color: #38a169;
-            margin-right: 0.8rem;
-            font-weight: bold;
-        }
-
-        .camera-hint {
-            background: rgba(255, 200, 100, 0.2);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 1rem;
-            border-left: 4px solid #ed8936;
-        }
-
-        .camera-hint-text {
-            font-size: 0.9rem;
-            color: #744210;
-        }
-
-        .project-iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translate(-50%, -50%) translateY(0);
-            }
-            40% {
-                transform: translate(-50%, -50%) translateY(-10px);
-            }
-            60% {
-                transform: translate(-50%, -50%) translateY(-5px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .loader-content {
-                padding: 1rem;
-            }
-            
-            .loader-title {
-                font-size: 1.5rem;
-            }
-            
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 8px 16px;
-            }
+            border: 0;
         }
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="goBack()">← 返回项目展示</button>
-
-    <div class="loader-container" id="loader">
-        <div class="loader-content">
-            <div class="loader-spinner">
-                <div class="spinner-ring"></div>
-                <div class="spinner-icon">👋</div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>💼 个人网站</span>
             </div>
-            
-            <h2 class="loader-title">手势大师</h2>
-            <p class="loader-subtitle">正在加载AI手势识别系统...</p>
-            
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-            </div>
-            
-            <div class="features-box">
-                <h3 class="features-title">🤖 AI手势识别特色</h3>
-                <ul class="features-list">
-                    <li class="feature-item">
-                        <span class="feature-check">✓</span>
-                        <span>MediaPipe实时手势检测</span>
-                    </li>
-                    <li class="feature-item">
-                        <span class="feature-check">✓</span>
-                        <span>3D模型交互控制</span>
-                    </li>
-                    <li class="feature-item">
-                        <span class="feature-check">✓</span>
-                        <span>多种手势识别支持</span>
-                    </li>
-                    <li class="feature-item">
-                        <span class="feature-check">✓</span>
-                        <span>流畅的实时反馈</span>
-                    </li>
-                </ul>
-                
-                <div class="camera-hint">
-                    <div class="camera-hint-text">
-                        📷 请允许访问摄像头以体验手势控制功能
-                    </div>
-                </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="../portfolio.html" class="nav-link active">作品展示</a>
+                <a href="../resume.html" class="nav-link">个人简历</a>
             </div>
         </div>
+    </nav>
+
+    <div class="container">
+        <a href="../portfolio.html" class="back-link">&larr; 返回作品集</a>
+        <header class="project-detail-header">
+            <h1 class="project-detail-title">手势大师</h1>
+        </header>
+        <div class="iframe-container">
+            <iframe src="https://danielbai007.github.io/GestureMaster/" title="手势大师" allow="camera; fullscreen" allowfullscreen></iframe>
+        </div>
     </div>
-
-    <iframe 
-        id="projectFrame"
-        class="project-iframe"
-        src="https://danielbai007.github.io/GestureMaster/"
-        allowfullscreen
-        allow="camera; microphone; fullscreen">
-    </iframe>
-
-    <script>
-        function goBack() {
-            window.location.href = '../index.html';
-        }
-
-        let progress = 0;
-        const progressFill = document.getElementById('progressFill');
-        const loader = document.getElementById('loader');
-        const iframe = document.getElementById('projectFrame');
-
-        // 模拟加载进度（手势识别需要更长时间加载）
-        const progressInterval = setInterval(() => {
-            progress += Math.random() * 10;
-            if (progress > 100) progress = 100;
-            
-            progressFill.style.width = progress + '%';
-            
-            if (progress >= 100) {
-                clearInterval(progressInterval);
-                
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    iframe.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 500);
-                }, 1000);
-            }
-        }, 250);
-
-        // 最少显示15秒加载界面（给手势识别充分的加载时间）
-        setTimeout(() => {
-            if (progress < 100) {
-                progress = 100;
-                progressFill.style.width = '100%';
-                clearInterval(progressInterval);
-            }
-            
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                iframe.style.display = 'block';
-                
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }, 1000);
-        }, 15000);
-    </script>
 </body>
 </html> 
