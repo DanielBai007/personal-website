@@ -123,56 +123,48 @@
             flex-wrap: wrap;
         }
 
-        .hero-button {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.4s ease;
+        .btn86{
+          width:200px;
+          height:56px;
+          color: white;
+          text-decoration: none;
+          background-color:transparent;
+          border-radius:5px;
+          border:4px ridge #2BD2FF;
+          cursor:pointer;
+          outline:none;
+          position:relative;
+          box-sizing:border-box;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          gap: 0.8rem;
+          transition:box-shadow 0.46s linear;
+          font-size:16px;
+          font-weight:bold;
+          letter-spacing:2px;
+        }
+        .btn86:before{
+          content:"";
+          width:180px;
+          height:48px;
+          background-color: #222;
+          position:absolute;
+          transition:width 0.24s linear;
+        }
+        .btn86 > span {
             position: relative;
-            overflow: hidden;
-            min-width: 180px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
+            z-index: 1;
+            transition:text-shadow 0.46s linear;
         }
-
-        .hero-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
+        .btn86:hover:before{
+          width:0;
         }
-
-        .hero-button:hover::before {
-            left: 100%;
+        .btn86:hover > span {
+          text-shadow:0 0 4px #2BD2FF;
         }
-
-        .hero-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-
-        .hero-button.primary {
-            background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
-            border: 2px solid transparent;
-        }
-
-        .hero-button.primary:hover {
-            background: linear-gradient(97deg, #1aa3ff, #c470ff 42%, #f54d78 74%, #f28419);
-            transform: translateY(-3px) scale(1.05);
+        .btn86:hover{
+          box-shadow:inset 0 0 24px #2BD2FF;
         }
 
         .button-icon {
@@ -232,15 +224,15 @@
 
     <div class="container">
         <div class="hero-section">
-            <h1 class="hero-title">白先生的数字世界</h1>
-            <p class="hero-subtitle">全栈开发工程师 · 产品设计师 · 创新技术探索者<br>用代码创造美好，用技术改变世界</p>
+            <h1 class="hero-title">欢迎来到我的小站</h1>
+            <p class="hero-subtitle">在这里你将能了解更多关于我的信息<br></p>
             
             <div class="hero-buttons">
-                <a href="resume.html" class="hero-button primary">
+                <a href="resume.html" class="btn86">
                     <span class="button-icon">📄</span>
                     <span>个人简历</span>
                 </a>
-                <a href="portfolio.html" class="hero-button">
+                <a href="portfolio.html" class="btn86">
                     <span class="button-icon">🚀</span>
                     <span>作品展示</span>
                 </a>
