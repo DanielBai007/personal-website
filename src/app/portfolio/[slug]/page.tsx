@@ -6,6 +6,16 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// 预定义所有可能的动态路由 - GitHub Pages静态导出必需
+export async function generateStaticParams() {
+  return [
+    { slug: 'satisfaction-dashboard' },
+    { slug: 'gesture-master' },
+    { slug: 'digital-pet' },
+    { slug: 'project-4' }, // 听写demo的预留
+  ];
+}
+
 // 加载界面组件
 const SatisfactionDashboardLoader = ({ iframeLoaded }: { iframeLoaded: boolean }) => {
   const [progress, setProgress] = useState(0);
@@ -227,7 +237,6 @@ const DigitalPetLoader = ({ iframeLoaded }: { iframeLoaded: boolean }) => {
             支持快捷键控制：空格播放/暂停、F全屏、1-5切换速度
           </p>
           <p className="text-xs text-green-600 mt-1">
-            ✅ 全屏功能已启用，可正常使用
           </p>
         </div>
       </div>
