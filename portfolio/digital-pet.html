@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字宠物屏保 - 项目详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: #8b4513;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .loader-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .spinner-ring {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(139, 69, 19, 0.2);
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .spinner-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .loader-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        .loader-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            color: #a0522d;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffa726);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .features-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .features-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: #a0522d;
+        }
+
+        .feature-check {
+            color: #4caf50;
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+
+        .shortcut-hint {
+            background: rgba(100, 200, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid #2196f3;
+        }
+
+        .shortcut-hint-text {
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+
+        .project-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .loader-content {
+                padding: 1rem;
+            }
+            
+            .loader-title {
+                font-size: 1.5rem;
+            }
+            
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="goBack()">← 返回首页</button>
+
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-icon">🎮</div>
+            </div>
+            
+            <h2 class="loader-title">数字宠物屏保</h2>
+            <p class="loader-subtitle">正在加载可爱的数字伙伴...</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <div class="features-box">
+                <h3 class="features-title">🐱 数字宠物特色</h3>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>多种可爱宠物角色</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>丰富的交互功能</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>个性化设置选项</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span>全屏屏保模式</span>
+                    </li>
+                </ul>
+                
+                <div class="shortcut-hint">
+                    <div class="shortcut-hint-text">
+                        ⌨️ 支持键盘快捷键操作 • 全屏功能已启用
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <iframe 
+        id="projectFrame"
+        class="project-iframe"
+        src="https://danielbai007.github.io/digitalLife/enhanced.html"
+        allowfullscreen
+        allow="fullscreen">
+    </iframe>
+
+    <script>
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+
+        let progress = 0;
+        const progressFill = document.getElementById('progressFill');
+        const loader = document.getElementById('loader');
+        const iframe = document.getElementById('projectFrame');
+
+        // 模拟加载进度
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 12;
+            if (progress > 100) progress = 100;
+            
+            progressFill.style.width = progress + '%';
+            
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    iframe.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 1000);
+            }
+        }, 200);
+
+        // 最少显示12秒加载界面
+        setTimeout(() => {
+            if (progress < 100) {
+                progress = 100;
+                progressFill.style.width = '100%';
+                clearInterval(progressInterval);
+            }
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                iframe.style.display = 'block';
+                
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        }, 12000);
+    </script>
+</body>
+</html> 

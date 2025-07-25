@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人网站 - 项目展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .project-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .project-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 个人项目展示</h1>
+            <p>探索创新技术，展现编程艺术</p>
+        </header>
+
+        <div class="projects-grid">
+            <div class="project-card" onclick="openProject('satisfaction-dashboard')">
+                <div class="project-image" style="background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);">
+                    📊
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">讲次评价分析平台</h3>
+                    <p class="project-description">
+                        智能化的教学评价数据分析工具，提供可视化图表、趋势分析和深度洞察，
+                        帮助教师和管理者了解教学质量和学生满意度。
+                    </p>
+                    <button class="project-button">查看项目详情</button>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openProject('gesture-master')">
+                <div class="project-image" style="background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);">
+                    👋
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">手势大师</h3>
+                    <p class="project-description">
+                        基于AI的手势识别交互系统，使用MediaPipe技术实现实时手势检测，
+                        支持多种手势控制和3D模型交互体验。
+                    </p>
+                    <button class="project-button">体验手势控制</button>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="openProject('digital-pet')">
+                <div class="project-image" style="background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%);">
+                    🐱
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">数字宠物屏保</h3>
+                    <p class="project-description">
+                        可爱的数字宠物屏保程序，提供多种宠物角色选择、互动功能和个性化设置，
+                        让您的桌面充满生活情趣。
+                    </p>
+                    <button class="project-button">启动数字宠物</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openProject(projectId) {
+            // 跳转到项目详情页面
+            window.location.href = `./portfolio/${projectId}.html`;
+        }
+
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为卡片添加平滑的入场动画
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html> 
