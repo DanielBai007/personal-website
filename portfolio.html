@@ -158,10 +158,39 @@
             100% { transform: rotate(360deg); }
         }
 
+        .light23 {
+            cursor: default;
+        }
+
+        .title23 {
+            color: #eaeaea;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px; /* Adjusted for better readability */
+            display: inline-block; /* Required for span layout */
+        }
+
+        .light23:hover .title23 span {
+            animation: light 0.4s ease forwards;
+        }
+
+        @keyframes light {
+            10%,30%,50% {
+                color: #eaeaea;
+                text-shadow: none;
+            }
+            20%,40%,60% {
+                color: #318BF6;
+                text-shadow: 0px 0px 20px #1ABFED,0px 0px 40px #1ABFED,0px 0px 60px #1ABFED;
+            }
+            100% {
+                color: #318BF6;
+                text-shadow: 0px 0px 20px #1ABFED,0px 0px 40px #1ABFED,0px 0px 60px #1ABFED;
+            }
+        }
+
         .project-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #ffffff;
+            /* Keep some base styles but override with .title23 */
             margin-bottom: 1rem;
         }
 
@@ -289,18 +318,25 @@
 
         const grid = document.getElementById('projects-grid');
         if (grid) {
-            grid.innerHTML = portfolioItems.map(item => `
-                <a href="./portfolio/${item.slug}.html" class="project-card">
+            grid.innerHTML = portfolioItems.map(item => {
+                // Split title into spans for the lighting effect
+                const titleWithSpans = item.title.split('').map((char, index) => {
+                    // Stagger the animation delay for each character
+                    return `<span style="animation-delay: ${index * 0.07}s">${char}</span>`;
+                }).join('');
+
+                return `
+                <a href="./portfolio/${item.slug}.html" class="project-card light23">
                     <div class="project-content">
                         <div>
-                            <h3 class="project-title">${item.title}</h3>
+                            <h3 class="project-title title23">${titleWithSpans}</h3>
                             <p class="project-description">${item.description}</p>
                         </div>
                         <span class="project-link">查看详情 &gt;</span>
                     </div>
                     <div class="card-bg"></div>
                 </a>
-            `).join('');
+            `}).join('');
         }
 
         // 添加页面加载动画
