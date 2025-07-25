@@ -113,65 +113,49 @@
         }
 
         .project-card {
-            position:relative;
-            text-decoration: none;
+            position: relative;
             display: block;
-        }
-
-        .card-bg-box {
-            width:100%;
-            height:100%;
-            position:relative;
-            border-radius:13px;
-            overflow:hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
+            text-decoration: none;
+            border-radius: 13px;
+            overflow: hidden;
+            background-color: #000;
             z-index: 1;
         }
 
-        .card-bg {
-            width:300%;
-            height:300%;
-            background:linear-gradient(135deg,rgba(43, 210, 255, 1.0) 0%,rgba(43, 210, 255, 0) 35%);
-            top:-100%;
-            left:-100%;
-            position:absolute;
-            animation:zhuan91 2s linear infinite;
-        }
-
-        @keyframes zhuan91{
-            0%{ transform:rotate(0deg); }
-            50%{ transform:rotate(180deg); }
-            100%{ transform:rotate(360deg); }
-        }
-
-        .card-main {
-            width:100%;
-            height:100%;
-            padding:2px;
-            position:relative;
-            z-index:10;
-            box-sizing:border-box;
-        }
-
         .project-content {
-            width:100%;
-            height:100%;
-            border-radius:11px;
-            background-color:#000000;
-            color:#fff;
-            display:flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
+            background-color: #000;
+            color: #fff;
             padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 11px;
+            margin: 2px;
+            position: relative;
+            z-index: 3;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .project-card:hover .project-content {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(135deg, rgba(43, 210, 255, 1.0) 0%, rgba(43, 210, 255, 0) 40%);
+            animation: zhuan91 2s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes zhuan91 {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .project-title {
@@ -307,18 +291,14 @@
         if (grid) {
             grid.innerHTML = portfolioItems.map(item => `
                 <a href="./portfolio/${item.slug}.html" class="project-card">
-                    <div class="card-bg-box">
-                        <div class="card-bg"></div>
-                    </div>
-                    <div class="card-main">
-                        <div class="project-content">
-                            <div>
-                                <h3 class="project-title">${item.title}</h3>
-                                <p class="project-description">${item.description}</p>
-                            </div>
-                            <span class="project-link">查看详情 &gt;</span>
+                    <div class="project-content">
+                        <div>
+                            <h3 class="project-title">${item.title}</h3>
+                            <p class="project-description">${item.description}</p>
                         </div>
+                        <span class="project-link">查看详情 &gt;</span>
                     </div>
+                    <div class="card-bg"></div>
                 </a>
             `).join('');
         }
