@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历 - 个人网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-top: 80px;
+        }
+
+        .resume-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .title {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .section {
+            padding: 2.5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .experience-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .company {
+            font-size: 1.1rem;
+            color: #667eea;
+            margin-bottom: 0.3rem;
+        }
+
+        .duration {
+            font-size: 0.9rem;
+            color: #718096;
+            background: #f7fafc;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+        }
+
+        .job-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .skill-category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .education-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .education-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.3rem;
+        }
+
+        .education-school {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .education-year {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin-top: 70px;
+            }
+            
+            .section {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-menu {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>💼 个人网站</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">项目展示</a>
+                <a href="resume.html" class="nav-link active">个人简历</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="resume-card">
+            <!-- 个人信息头部 -->
+            <div class="header-section">
+                <div class="profile-image">
+                    👨‍💻
+                </div>
+                <h1 class="name">白先生</h1>
+                <p class="title">全栈开发工程师 · 产品经理</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>contact@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>+86 138-0000-0000</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>北京市</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🔗</span>
+                        <span>github.com/DanielBai007</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人简介 -->
+            <div class="section">
+                <h2 class="section-title">个人简介</h2>
+                <p style="color: #4a5568; line-height: 1.8; font-size: 1.1rem;">
+                    具有20年丰富开发经验的全栈工程师，精通多种编程语言和前沿技术栈。
+                    擅长产品设计、架构规划和团队管理，在教育科技、数据分析和AI应用等领域有深入实践。
+                    对用户体验和代码质量有着极高的追求，善于将复杂的技术方案转化为简洁易用的产品。
+                </p>
+            </div>
+
+            <!-- 工作经历 -->
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">高级全栈开发工程师 & 产品经理</div>
+                            <div class="company">教育科技公司</div>
+                        </div>
+                        <div class="duration">2018 - 至今</div>
+                    </div>
+                    <div class="job-description">
+                        负责教学评价数据分析平台的设计与开发，包括数据可视化、智能分析算法和用户交互界面。
+                        主导产品需求分析、架构设计和项目管理，带领团队完成多个核心产品的开发和上线。
+                        实现了数据处理效率提升300%，用户满意度达到95%以上。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">前端开发工程师</div>
+                            <div class="company">互联网创业公司</div>
+                        </div>
+                        <div class="duration">2015 - 2018</div>
+                    </div>
+                    <div class="job-description">
+                        参与多个Web应用和移动应用的前端开发，使用React、Vue等框架构建用户界面。
+                        优化网站性能，实现页面加载速度提升50%，提升用户体验和转化率。
+                        与设计师和后端工程师紧密合作，确保产品质量和开发效率。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">软件开发工程师</div>
+                            <div class="company">软件外包公司</div>
+                        </div>
+                        <div class="duration">2012 - 2015</div>
+                    </div>
+                    <div class="job-description">
+                        参与企业级应用系统的开发和维护，涉及Java后端开发、数据库设计和系统集成。
+                        负责需求分析、技术选型和代码实现，积累了丰富的项目开发和问题解决经验。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 技能专长 -->
+            <div class="section">
+                <h2 class="section-title">技能专长</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">前端技术</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Vue.js</span>
+                            <span class="skill-tag">Next.js</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">Tailwind CSS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">后端技术</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">Express</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">Spring Boot</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">数据库</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Redis</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">工具 & 其他</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Figma</span>
+                            <span class="skill-tag">AI/ML</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教育背景 -->
+            <div class="section">
+                <h2 class="section-title">教育背景</h2>
+                
+                <div class="education-item">
+                    <div class="education-title">计算机科学与技术 学士学位</div>
+                    <div class="education-school">知名理工大学</div>
+                    <div class="education-year">2008 - 2012</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">软件工程 硕士学位</div>
+                    <div class="education-school">重点大学</div>
+                    <div class="education-year">2012 - 2014</div>
+                </div>
+            </div>
+
+            <!-- 项目作品 -->
+            <div class="section">
+                <h2 class="section-title">项目作品</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">讲次评价分析平台</div>
+                            <div class="company">教育数据可视化系统</div>
+                        </div>
+                        <div class="duration">2023</div>
+                    </div>
+                    <div class="job-description">
+                        基于ECharts和现代Web技术构建的智能教学评价分析工具，支持多维度数据分析、
+                        实时图表展示和趋势预测。提供直观的用户界面和丰富的交互功能。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">手势大师</div>
+                            <div class="company">AI手势识别应用</div>
+                        </div>
+                        <div class="duration">2023</div>
+                    </div>
+                    <div class="job-description">
+                        使用MediaPipe技术实现的实时手势识别系统，支持多种手势控制和3D模型交互。
+                        展现了在AI应用和前端技术结合方面的创新能力。
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">数字宠物屏保</div>
+                            <div class="company">互动娱乐应用</div>
+                        </div>
+                        <div class="duration">2023</div>
+                    </div>
+                    <div class="job-description">
+                        创意十足的数字宠物屏保程序，提供多种角色选择和互动功能。
+                        注重用户体验设计和动画效果，展现了在前端开发和创意设计方面的能力。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
