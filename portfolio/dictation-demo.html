@@ -76,10 +76,11 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            padding-top: 100px;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            padding-top: 60px; /* Height of the navbar */
         }
 
         /* Project detail specific styles */
@@ -112,12 +113,8 @@
         }
 
         .iframe-container {
-            position: relative;
             width: 100%;
-            height: 80vh; /* 80% of viewport height */
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            height: 100%;
             background: #1a1a1a;
             display: flex;
             align-items: center;
@@ -130,9 +127,6 @@
         }
 
         .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
@@ -142,22 +136,13 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <span>💼 个人网站</span>
-            </div>
             <div class="nav-menu">
-                <a href="../index.html" class="nav-link">首页</a>
-                <a href="../portfolio.html" class="nav-link active">作品展示</a>
-                <a href="../resume.html" class="nav-link">个人简历</a>
+                <a href="../portfolio.html" class="nav-link">&larr; 返回作品集</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
-        <a href="../portfolio.html" class="back-link">&larr; 返回作品集</a>
-        <header class="project-detail-header">
-            <h1 class="project-detail-title">听写demo</h1>
-        </header>
         <div class="iframe-container">
             <!-- <iframe src="URL_FOR_DICTATION_DEMO" title="听写demo" allowfullscreen></iframe> -->
             <div class="placeholder-text">项目正在部署中...</div>
