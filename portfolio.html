@@ -13,13 +13,13 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0A0A0A;
             min-height: 100vh;
             color: #333;
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: #202937;
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
@@ -27,7 +27,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
 
         .nav-container {
@@ -42,7 +42,7 @@
         .nav-logo span {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #667eea;
+            color: #ffffff;
         }
 
         .nav-menu {
@@ -52,22 +52,25 @@
 
         .nav-link {
             text-decoration: none;
-            color: #4a5568;
+            color: #ffffff;
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             transition: all 0.3s ease;
+            opacity: 0.8;
         }
 
         .nav-link:hover {
-            background: #667eea;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             transform: translateY(-2px);
+            opacity: 1;
         }
 
         .nav-link.active {
-            background: #667eea;
+            background: rgba(255, 255, 255, 0.15);
             color: white;
+            opacity: 1;
         }
 
         .container {
@@ -85,13 +88,16 @@
 
         .page-title {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+            color: transparent;
             background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
         }
 
         .page-subtitle {
@@ -169,7 +175,7 @@
         }
 
         .project-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(97deg, #0096FF, #BB64FF 42%, #F2416B 74%, #EB7500);
             color: white;
             border: none;
             padding: 0.9rem 2rem;
@@ -183,8 +189,8 @@
 
         .project-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            background: linear-gradient(135deg, #7c8df1 0%, #8456b8 100%);
+            box-shadow: 0 8px 25px rgba(0, 150, 255, 0.4);
+            background: linear-gradient(97deg, #1aa3ff, #c470ff 42%, #f54d78 74%, #f28419);
         }
 
         @media (max-width: 768px) {
