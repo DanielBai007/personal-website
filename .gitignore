@@ -87,4 +87,11 @@ temp-site/
 debug_test.html
 test_iframe.html
 library_test.html
-auto_data_loader.html 
+auto_data_loader.html
+
+# Large data files (only ignore files larger than 50MB)
+# Keep demo data files that are reasonable size
+*.xlsx
+# Ignore any future large CSV files in other directories
+uploads/*.csv
+temp/*.csv 
