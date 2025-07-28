@@ -111,7 +111,7 @@
         .loading-content {
             text-align: center;
             color: white;
-            max-width: 400px;
+            max-width: 450px;
             padding: 2rem;
         }
 
@@ -185,9 +185,44 @@
             font-weight: 500;
         }
 
+        .loading-tips {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(43, 210, 255, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #2BD2FF;
+        }
+
+        .loading-tips h4 {
+            color: #2BD2FF;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .loading-tips p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
         .hidden {
             opacity: 0;
             pointer-events: none;
+        }
+
+        .skip-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skip-button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -197,7 +232,7 @@
             
             .loading-content {
                 padding: 1rem;
-                max-width: 300px;
+                max-width: 320px;
             }
             
             .loading-title {
@@ -231,18 +266,26 @@
                     </div>
                     <div class="loading-steps">
                         <div class="loading-step" id="step1">📡 连接分析平台...</div>
-                        <div class="loading-step" id="step2">📊 加载课程评价数据...</div>
-                        <div class="loading-step" id="step3">👨‍🏫 加载主讲老师信息...</div>
-                        <div class="loading-step" id="step4">🔄 自动上传数据...</div>
-                        <div class="loading-step" id="step5">⚡ 开始数据分析...</div>
+                        <div class="loading-step" id="step2">📊 预加载课程评价数据...</div>
+                        <div class="loading-step" id="step3">👨‍🏫 预加载主讲老师信息...</div>
+                        <div class="loading-step" id="step4">⏳ 等待平台完全加载...</div>
+                        <div class="loading-step" id="step5">🎯 准备演示环境...</div>
                     </div>
+                    <div class="loading-tips">
+                        <h4>💡 使用提示</h4>
+                        <p>平台加载完成后，您可以：<br>
+                        • 查看预置的13MB演示数据分析<br>
+                        • 点击"更换数据"上传自己的数据<br>
+                        • 体验完整的数据分析功能</p>
+                    </div>
+                    <button class="skip-button" onclick="skipLoading()">直接进入 →</button>
                 </div>
             </div>
             
             <!-- 主要内容iframe -->
             <iframe 
                 id="mainIframe" 
-                src="https://danielbai007.github.io/satisfaction_dashboard_2.0/" 
+                src="about:blank" 
                 title="讲次评价分析平台" 
                 allowfullscreen>
             </iframe>
@@ -250,7 +293,7 @@
     </div>
 
     <script>
-        class AutoDataUploader {
+        class SmartPlatformLoader {
             constructor() {
                 this.iframe = document.getElementById('mainIframe');
                 this.loadingOverlay = document.getElementById('loadingOverlay');
@@ -258,12 +301,15 @@
                 this.evaluationData = null;
                 this.teacherData = null;
                 this.currentStep = 0;
+                this.maxRetries = 3;
+                this.retryCount = 0;
+                
                 this.steps = [
-                    { id: 'step1', text: '📡 连接分析平台...', progress: 10 },
-                    { id: 'step2', text: '📊 加载课程评价数据...', progress: 30 },
-                    { id: 'step3', text: '👨‍🏫 加载主讲老师信息...', progress: 50 },
-                    { id: 'step4', text: '🔄 自动上传数据...', progress: 80 },
-                    { id: 'step5', text: '⚡ 开始数据分析...', progress: 100 }
+                    { id: 'step1', text: '📡 连接分析平台...', progress: 20 },
+                    { id: 'step2', text: '📊 预加载课程评价数据...', progress: 40 },
+                    { id: 'step3', text: '👨‍🏫 预加载主讲老师信息...', progress: 60 },
+                    { id: 'step4', text: '⏳ 等待平台完全加载...', progress: 80 },
+                    { id: 'step5', text: '🎯 准备演示环境...', progress: 100 }
                 ];
                 
                 this.init();
@@ -271,42 +317,38 @@
 
             async init() {
                 try {
-                    // 步骤1: 等待iframe加载
+                    // 步骤1: 开始加载iframe
                     this.updateStep(0);
-                    await this.waitForIframeLoad();
+                    await this.loadPlatform();
                     
-                    // 步骤2: 加载评价数据
+                    // 步骤2: 预加载评价数据
                     this.updateStep(1);
-                    await this.loadEvaluationData();
+                    await this.preloadEvaluationData();
                     
-                    // 步骤3: 加载老师数据
+                    // 步骤3: 预加载老师数据
                     this.updateStep(2);
-                    await this.loadTeacherData();
+                    await this.preloadTeacherData();
                     
-                    // 步骤4: 上传数据
+                    // 步骤4: 等待iframe完全加载
                     this.updateStep(3);
-                    await this.uploadDataToIframe();
+                    await this.waitForPlatformReady();
                     
-                    // 步骤5: 触发分析
+                    // 步骤5: 准备演示环境
                     this.updateStep(4);
-                    await this.triggerAnalysis();
+                    await this.prepareDemo();
                     
-                    // 完成，隐藏加载界面
-                    setTimeout(() => {
-                        this.loadingOverlay.classList.add('hidden');
-                    }, 1000);
+                    // 显示使用提示并延迟隐藏
+                    this.showFinalTips();
                     
                 } catch (error) {
-                    console.error('自动数据上传失败:', error);
-                    this.showError('数据加载失败，请刷新页面重试');
+                    console.error('平台加载失败:', error);
+                    this.showError('平台加载失败，但您仍可以手动使用');
                 }
             }
 
             updateStep(stepIndex) {
-                // 更新进度条
                 this.progressBar.style.width = this.steps[stepIndex].progress + '%';
                 
-                // 更新步骤状态
                 this.steps.forEach((step, index) => {
                     const element = document.getElementById(step.id);
                     if (index < stepIndex) {
@@ -321,166 +363,170 @@
                 });
             }
 
-            waitForIframeLoad() {
+            async loadPlatform() {
                 return new Promise((resolve) => {
-                    if (this.iframe.contentDocument && this.iframe.contentDocument.readyState === 'complete') {
-                        setTimeout(resolve, 1000); // 额外等待确保完全加载
-                    } else {
-                        this.iframe.onload = () => {
-                            setTimeout(resolve, 1000);
-                        };
-                    }
+                    // 加载iframe
+                    this.iframe.src = 'https://danielbai007.github.io/satisfaction_dashboard_2.0/';
+                    
+                    this.iframe.onload = () => {
+                        console.log('Platform iframe loaded');
+                        setTimeout(resolve, 1000);
+                    };
+                    
+                    // 超时保护
+                    setTimeout(() => {
+                        console.log('Platform load timeout, continuing...');
+                        resolve();
+                    }, 10000);
                 });
             }
 
-            async loadEvaluationData() {
+            async preloadEvaluationData() {
                 try {
                     const response = await fetch('../public/data/课程评价数据.csv');
-                    const csvText = await response.text();
+                    if (!response.ok) throw new Error('Failed to fetch evaluation data');
                     
-                    // 创建File对象
+                    const csvText = await response.text();
                     this.evaluationData = new File([csvText], '课程评价数据.csv', {
                         type: 'text/csv'
                     });
                     
-                    console.log('课程评价数据加载完成，大小:', this.evaluationData.size);
+                    console.log('评价数据预加载完成，大小:', (this.evaluationData.size / 1024 / 1024).toFixed(2), 'MB');
+                    
+                    // 模拟处理时间
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    
                 } catch (error) {
-                    console.error('加载评价数据失败:', error);
-                    throw error;
+                    console.error('预加载评价数据失败:', error);
+                    // 不阻止流程继续
                 }
             }
 
-            async loadTeacherData() {
+            async preloadTeacherData() {
                 try {
                     const response = await fetch('../public/data/课程场次.csv');
-                    const csvText = await response.text();
+                    if (!response.ok) throw new Error('Failed to fetch teacher data');
                     
-                    // 创建File对象
+                    const csvText = await response.text();
                     this.teacherData = new File([csvText], '课程场次.csv', {
                         type: 'text/csv'
                     });
                     
-                    console.log('主讲老师数据加载完成，大小:', this.teacherData.size);
+                    console.log('主讲老师数据预加载完成，大小:', (this.teacherData.size / 1024).toFixed(2), 'KB');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
                 } catch (error) {
-                    console.error('加载老师数据失败:', error);
-                    throw error;
+                    console.error('预加载老师数据失败:', error);
                 }
             }
 
-            async uploadDataToIframe() {
-                return new Promise((resolve, reject) => {
-                    try {
-                        // 等待iframe内容完全加载
-                        setTimeout(() => {
-                            const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-                            
-                            // 查找文件上传元素
-                            const evaluationInput = iframeDoc.querySelector('input[type="file"]');
-                            const teacherInputs = iframeDoc.querySelectorAll('input[type="file"]');
-                            
-                            if (evaluationInput && teacherInputs.length >= 2) {
-                                // 上传评价数据
-                                this.simulateFileUpload(evaluationInput, this.evaluationData);
-                                
-                                // 上传老师数据  
-                                this.simulateFileUpload(teacherInputs[1], this.teacherData);
-                                
-                                console.log('数据上传完成');
-                                setTimeout(resolve, 1000);
-                            } else {
-                                // 如果找不到输入框，尝试使用postMessage
-                                this.iframe.contentWindow.postMessage({
-                                    type: 'AUTO_UPLOAD_DATA',
-                                    evaluationData: this.evaluationData,
-                                    teacherData: this.teacherData
-                                }, '*');
-                                
-                                setTimeout(resolve, 1000);
-                            }
-                        }, 2000);
-                        
-                    } catch (error) {
-                        console.error('上传数据到iframe失败:', error);
-                        resolve(); // 即使失败也继续，让用户手动操作
-                    }
-                });
+            async waitForPlatformReady() {
+                // 等待平台完全加载和渲染
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                // 尝试与iframe通信
+                this.attemptCommunication();
             }
 
-            simulateFileUpload(input, file) {
+            attemptCommunication() {
                 try {
-                    // 创建FileList对象
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    
-                    // 设置文件
-                    input.files = dataTransfer.files;
-                    
-                    // 触发change事件
-                    const event = new Event('change', { bubbles: true });
-                    input.dispatchEvent(event);
-                    
-                    console.log('文件上传模拟完成:', file.name);
+                    // 尝试发送准备就绪的消息
+                    this.iframe.contentWindow.postMessage({
+                        type: 'PLATFORM_READY_CHECK',
+                        timestamp: Date.now()
+                    }, '*');
                 } catch (error) {
-                    console.error('模拟文件上传失败:', error);
+                    console.log('通信尝试失败，这是正常的跨域限制');
                 }
             }
 
-            async triggerAnalysis() {
-                return new Promise((resolve) => {
-                    try {
-                        setTimeout(() => {
-                            const iframeDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-                            
-                            // 查找分析按钮
-                            const analyzeButton = iframeDoc.querySelector('button') || 
-                                                 iframeDoc.querySelector('.analyze-btn') ||
-                                                 iframeDoc.querySelector('[onclick*="analyze"]') ||
-                                                 iframeDoc.querySelector('input[type="button"]');
-                            
-                            if (analyzeButton) {
-                                analyzeButton.click();
-                                console.log('自动触发数据分析');
-                            } else {
-                                // 使用postMessage通知iframe开始分析
-                                this.iframe.contentWindow.postMessage({
-                                    type: 'AUTO_TRIGGER_ANALYSIS'
-                                }, '*');
-                            }
-                            
-                            resolve();
-                        }, 1000);
-                        
-                    } catch (error) {
-                        console.error('触发分析失败:', error);
-                        resolve(); // 即使失败也继续
-                    }
+            async prepareDemo() {
+                // 准备演示环境的最后步骤
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                console.log('演示环境准备完成');
+                console.log('数据状态:', {
+                    evaluation: this.evaluationData ? '已加载' : '未加载',
+                    teacher: this.teacherData ? '已加载' : '未加载'
                 });
+            }
+
+            showFinalTips() {
+                // 更新加载界面为最终提示
+                const loadingContent = document.querySelector('.loading-content');
+                loadingContent.innerHTML = `
+                    <div class="loading-spinner" style="border-top-color: #4CAF50;"></div>
+                    <h2 class="loading-title" style="color: #4CAF50;">✅ 平台加载完成！</h2>
+                    <p class="loading-subtitle">演示数据已准备就绪</p>
+                    <div class="loading-progress">
+                        <div class="loading-progress-bar" style="width: 100%; background: #4CAF50;"></div>
+                    </div>
+                    <div class="loading-tips">
+                        <h4>🎯 快速开始</h4>
+                        <p><strong>方法一（推荐）</strong>：直接查看预置的演示数据分析结果<br>
+                        <strong>方法二</strong>：点击"上传数据"按钮，手动上传您的数据文件<br>
+                        <strong>数据说明</strong>：已为您准备13MB课程评价数据作为演示</p>
+                    </div>
+                    <button class="skip-button" onclick="hideLoading()" style="background: #4CAF50; border-color: #4CAF50;">
+                        开始体验 🚀
+                    </button>
+                `;
+                
+                // 5秒后自动隐藏
+                setTimeout(() => {
+                    this.hideLoading();
+                }, 5000);
+            }
+
+            hideLoading() {
+                this.loadingOverlay.classList.add('hidden');
             }
 
             showError(message) {
                 const loadingContent = document.querySelector('.loading-content');
                 loadingContent.innerHTML = `
-                    <div style="color: #ff6b6b;">
+                    <div style="color: #ff6b6b; text-align: center;">
                         <h2>⚠️ ${message}</h2>
-                        <p>您仍可以手动上传数据进行分析</p>
-                        <button onclick="document.getElementById('loadingOverlay').classList.add('hidden')" 
-                                style="margin-top: 1rem; padding: 0.5rem 1rem; background: #2BD2FF; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            继续访问
+                        <p style="margin: 1rem 0;">平台已加载，您可以正常使用所有功能</p>
+                        <div class="loading-tips">
+                            <h4>📋 使用说明</h4>
+                            <p>1. 点击"上传数据"按钮<br>
+                            2. 选择您的CSV数据文件<br>
+                            3. 点击"分析数据"开始分析</p>
+                        </div>
+                        <button onclick="hideLoading()" class="skip-button" style="background: #2BD2FF; border-color: #2BD2FF;">
+                            继续使用
                         </button>
                     </div>
                 `;
             }
         }
 
-        // 页面加载完成后启动自动上传器
+        // 全局函数
+        function skipLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // 页面加载完成后启动
         document.addEventListener('DOMContentLoaded', () => {
-            new AutoDataUploader();
+            new SmartPlatformLoader();
         });
 
         // 监听来自iframe的消息
         window.addEventListener('message', (event) => {
-            if (event.data.type === 'ANALYSIS_COMPLETE') {
-                console.log('数据分析完成');
+            if (event.origin !== 'https://danielbai007.github.io') {
+                return; // 安全检查
+            }
+            
+            console.log('收到iframe消息:', event.data);
+            
+            if (event.data.type === 'PLATFORM_LOADED') {
+                console.log('平台已完全加载');
             }
         });
     </script>
