@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目详情 - 牛马小皮鞭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0A0A0A;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            background: #202937;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            opacity: 1;
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            padding-top: 60px;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* 加载界面样式 */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+            max-width: 450px;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #FF6B35;
+        }
+
+        .loading-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B35, #FF8E53);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .loading-steps {
+            text-align: left;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .loading-step {
+            margin-bottom: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .loading-step.completed {
+            color: #4CAF50;
+        }
+
+        .loading-step.current {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .loading-tips {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #FF6B35;
+        }
+
+        .loading-tips h4 {
+            color: #FF6B35;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .loading-tips p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .skip-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .skip-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .loading-content {
+                padding: 1rem;
+                max-width: 320px;
+            }
+            
+            .loading-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>牛马小皮鞭</span>
+            </div>
+            <div class="nav-menu">
+                <a href="../portfolio.html" class="nav-link">&larr; 返回作品集</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="iframe-container">
+            <!-- 加载界面 -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <h2 class="loading-title">正在加载实时工资看板</h2>
+                    <p class="loading-subtitle">见证财富增长的每一秒...</p>
+                    <div class="loading-progress">
+                        <div class="loading-progress-bar" id="progressBar" style="width: 10%"></div>
+                    </div>
+                    <div class="loading-steps">
+                        <div class="loading-step" id="step1">📡 连接工资计算器...</div>
+                        <div class="loading-step" id="step2">💰 初始化收入模块...</div>
+                        <div class="loading-step" id="step3">⏰ 同步时间系统...</div>
+                        <div class="loading-step" id="step4">🎨 加载界面主题...</div>
+                        <div class="loading-step" id="step5">🚀 启动实时计算...</div>
+                    </div>
+                    <div class="loading-tips">
+                        <h4>💡 使用提示</h4>
+                        <p>加载完成后，您可以：<br>
+                        • 输入月薪和工作时间<br>
+                        • 选择货币和界面主题<br>
+                        • 实时查看收入增长<br>
+                        • 体验赛博朋克风格</p>
+                    </div>
+                    <button class="skip-button" onclick="skipLoading()">直接进入 →</button>
+                </div>
+            </div>
+            
+            <!-- 主要内容iframe -->
+            <iframe 
+                id="mainIframe" 
+                src="about:blank" 
+                title="牛马小皮鞭 - 实时工资看板" 
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        class WhipLoader {
+            constructor() {
+                this.iframe = document.getElementById('mainIframe');
+                this.loadingOverlay = document.getElementById('loadingOverlay');
+                this.progressBar = document.getElementById('progressBar');
+                this.currentStep = 0;
+                
+                this.steps = [
+                    { id: 'step1', text: '📡 连接工资计算器...', progress: 20 },
+                    { id: 'step2', text: '💰 初始化收入模块...', progress: 40 },
+                    { id: 'step3', text: '⏰ 同步时间系统...', progress: 60 },
+                    { id: 'step4', text: '🎨 加载界面主题...', progress: 80 },
+                    { id: 'step5', text: '🚀 启动实时计算...', progress: 100 }
+                ];
+                
+                this.init();
+            }
+
+            async init() {
+                try {
+                    // 步骤1: 开始加载iframe
+                    this.updateStep(0);
+                    await this.loadWhipPlatform();
+                    
+                    // 步骤2: 初始化收入模块
+                    this.updateStep(1);
+                    await this.initIncomeModule();
+                    
+                    // 步骤3: 同步时间系统
+                    this.updateStep(2);
+                    await this.syncTimeSystem();
+                    
+                    // 步骤4: 加载界面主题
+                    this.updateStep(3);
+                    await this.loadTheme();
+                    
+                    // 步骤5: 启动实时计算
+                    this.updateStep(4);
+                    await this.startRealTimeCalculation();
+                    
+                    // 显示成功界面
+                    this.showSuccess();
+                    
+                } catch (error) {
+                    console.error('加载失败:', error);
+                    this.showError('加载失败，但您仍可以手动使用');
+                }
+            }
+
+            updateStep(stepIndex) {
+                this.progressBar.style.width = this.steps[stepIndex].progress + '%';
+                
+                this.steps.forEach((step, index) => {
+                    const element = document.getElementById(step.id);
+                    if (index < stepIndex) {
+                        element.className = 'loading-step completed';
+                        element.innerHTML = step.text.replace('...', ' ✓');
+                    } else if (index === stepIndex) {
+                        element.className = 'loading-step current';
+                        element.innerHTML = step.text;
+                    } else {
+                        element.className = 'loading-step';
+                    }
+                });
+            }
+
+            async loadWhipPlatform() {
+                return new Promise((resolve, reject) => {
+                    // 加载iframe
+                    this.iframe.src = 'https://danielbai007.github.io/whip/';
+                    
+                    this.iframe.onload = () => {
+                        console.log('牛马小皮鞭平台加载完成');
+                        setTimeout(resolve, 2000); // 给予额外时间渲染
+                    };
+                    
+                    this.iframe.onerror = () => {
+                        reject(new Error('平台加载失败'));
+                    };
+                    
+                    // 15秒超时
+                    setTimeout(() => {
+                        reject(new Error('平台加载超时'));
+                    }, 15000);
+                });
+            }
+
+            async initIncomeModule() {
+                // 模拟收入模块初始化
+                await new Promise(resolve => setTimeout(resolve, 800));
+                console.log('收入模块初始化完成');
+            }
+
+            async syncTimeSystem() {
+                // 模拟时间系统同步
+                await new Promise(resolve => setTimeout(resolve, 600));
+                console.log('时间系统同步完成');
+            }
+
+            async loadTheme() {
+                // 模拟主题加载
+                await new Promise(resolve => setTimeout(resolve, 500));
+                console.log('界面主题加载完成');
+            }
+
+            async startRealTimeCalculation() {
+                // 模拟启动实时计算
+                await new Promise(resolve => setTimeout(resolve, 700));
+                console.log('实时计算启动完成');
+            }
+
+            showSuccess() {
+                const loadingContent = document.querySelector('.loading-content');
+                loadingContent.innerHTML = `
+                    <div class="loading-spinner" style="border-top-color: #4CAF50;"></div>
+                    <h2 class="loading-title" style="color: #4CAF50;">✅ 实时工资看板已就绪！</h2>
+                    <p class="loading-subtitle">开始见证财富增长的每一秒</p>
+                    <div class="loading-progress">
+                        <div class="loading-progress-bar" style="width: 100%; background: #4CAF50;"></div>
+                    </div>
+                    <div class="loading-tips">
+                        <h4>🎯 快速开始</h4>
+                        <p><strong>步骤1</strong>：输入您的月薪<br>
+                        <strong>步骤2</strong>：设置工作时间<br>
+                        <strong>步骤3</strong>：选择货币和主题<br>
+                        <strong>步骤4</strong>：点击开始计算</p>
+                    </div>
+                    <button class="skip-button" onclick="hideLoading()" style="background: #4CAF50; border-color: #4CAF50;">
+                        开始体验 💰
+                    </button>
+                `;
+                
+                // 3秒后自动隐藏
+                setTimeout(() => {
+                    this.hideLoading();
+                }, 3000);
+            }
+
+            hideLoading() {
+                this.loadingOverlay.classList.add('hidden');
+            }
+
+            showError(message) {
+                const loadingContent = document.querySelector('.loading-content');
+                loadingContent.innerHTML = `
+                    <div style="color: #ff6b6b; text-align: center;">
+                        <h2>⚠️ 加载失败</h2>
+                        <p style="margin: 1rem 0;">${message}</p>
+                        <div class="loading-tips">
+                            <h4>📋 手动操作指南</h4>
+                            <p>1. 输入您的月薪金额<br>
+                            2. 设置月工作天数和时间<br>
+                            3. 选择货币符号和界面主题<br>
+                            4. 点击"开始计算"按钮</p>
+                        </div>
+                        <button onclick="hideLoading()" class="skip-button" style="background: #FF6B35; border-color: #FF6B35;">
+                            继续使用
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // 全局函数
+        function skipLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // 页面加载完成后启动
+        document.addEventListener('DOMContentLoaded', () => {
+            new WhipLoader();
+        });
+
+        // 监听来自iframe的消息
+        window.addEventListener('message', (event) => {
+            console.log('收到iframe消息:', event.data);
+            
+            // 处理各种响应消息
+            switch (event.data.type) {
+                case 'PLATFORM_READY':
+                    console.log('平台已就绪');
+                    break;
+                case 'CALCULATION_STARTED':
+                    console.log('计算已开始');
+                    break;
+                case 'INCOME_UPDATED':
+                    console.log('收入已更新');
+                    break;
+            }
+        });
+    </script>
+</body>
+</html> 

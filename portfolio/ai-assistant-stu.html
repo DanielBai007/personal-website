@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目详情 - 萌娃小讲师（学生版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0A0A0A;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            background: #202937;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-wrapper {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(97deg, #6C63FF, #9C92FF 42%, #FF6B9D 74%, #4CAF50);
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            color: #adb5bd;
+            margin-bottom: 2rem;
+        }
+
+        .platform-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .platform-info h3 {
+            color: #6C63FF;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .platform-info p {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            text-align: left;
+        }
+
+        .feature-item h4 {
+            color: #6C63FF;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: #adb5bd;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6C63FF, #9C92FF);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .platform-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108, 99, 255, 0.2);
+            color: #6C63FF;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .warning-note {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #FFC107;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-top: 2rem;
+            color: #FFE082;
+        }
+
+        .warning-note h4 {
+            color: #FFC107;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .warning-note p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #6C63FF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #6C63FF;
+        }
+
+        .loading-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6C63FF, #9C92FF);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .loading-steps {
+            text-align: left;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .loading-step {
+            margin-bottom: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .loading-step.completed {
+            color: #4CAF50;
+        }
+
+        .loading-step.current {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .loading-tips {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #6C63FF;
+        }
+
+        .loading-tips h4 {
+            color: #6C63FF;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .loading-tips p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .skip-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .skip-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+                 @media (max-width: 768px) {
+             .container {
+                 padding: 1rem;
+                 padding-top: 100px;
+             }
+             
+             .nav-container {
+                 padding: 0 1rem;
+             }
+             
+             .page-title {
+                 font-size: 2.5rem;
+             }
+             
+             .page-subtitle {
+                 font-size: 1.1rem;
+             }
+             
+             .platform-info {
+                 padding: 2rem;
+             }
+             
+             .platform-info h3 {
+                 font-size: 1.5rem;
+             }
+             
+             .features-grid {
+                 grid-template-columns: 1fr;
+                 gap: 1rem;
+             }
+             
+             .action-buttons {
+                 flex-direction: column;
+                 align-items: center;
+             }
+             
+             .btn-primary,
+             .btn-secondary {
+                 width: 100%;
+                 max-width: 300px;
+             }
+         }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>萌娃小讲师（学生版）</span>
+            </div>
+            <div class="nav-menu">
+                <a href="../portfolio.html" class="nav-link">&larr; 返回作品集</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <header class="page-header">
+                <h1 class="page-title">萌娃小讲师</h1>
+                <p class="page-subtitle">学生版 - 智能学习助手</p>
+            </header>
+
+            <div class="platform-info">
+                <div class="platform-badge">
+                    🤖 豆包平台 AI应用
+                </div>
+                <h3>专为小学学员设计的视频讲题场景</h3>
+                <p>基于豆包AI平台构建的智能学习助手，为小学生提供个性化的学习指导和互动体验。</p>
+                
+                <div class="features-grid">
+
+                </div>
+
+                <div class="action-buttons">
+                    <a href="https://doubao.com/bot/9Uy8mXcO" 
+                       target="_blank" 
+                       class="btn-primary"
+                       onclick="trackPlatformVisit('student')">
+                        🚀 开始学习
+                    </a>
+                    <a href="../portfolio.html" class="btn-secondary">
+                        ← 返回作品集
+                    </a>
+                </div>
+
+                <div class="warning-note">
+                    <h4>💡 使用提示</h4>
+                    <p>点击"开始学习"将在新窗口中打开豆包平台的AI应用。首次使用可能需要登录豆包账号。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 跟踪平台访问
+        function trackPlatformVisit(platform) {
+            console.log(`用户访问${platform}版萌娃小讲师`);
+            
+            // 显示访问提示
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '🚀 正在跳转...';
+            btn.style.opacity = '0.7';
+            
+            // 1秒后恢复按钮状态
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+            }, 1000);
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 给页面元素添加淡入动画
+            const elements = document.querySelectorAll('.page-header, .platform-info');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + index * 300);
+            });
+
+            // 为按钮添加额外的交互效果
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // 为特性卡片添加悬停效果
+            const features = document.querySelectorAll('.feature-item');
+            features.forEach(feature => {
+                feature.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px)';
+                    this.style.boxShadow = '0 8px 25px rgba(108, 99, 255, 0.2)';
+                });
+                
+                feature.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

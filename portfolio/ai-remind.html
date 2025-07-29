@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目详情 - 各类AI提醒</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0A0A0A;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: #202937;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+        }
+
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(97deg, #FF6B35, #F7931E 42%, #FFD23F 74%, #06D6A0);
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            color: #adb5bd;
+            margin-bottom: 2rem;
+        }
+
+        .page-description {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        .section-reverse .section-content {
+            direction: rtl;
+        }
+
+        .section-reverse .text-content,
+        .section-reverse .image-content {
+            direction: ltr;
+        }
+
+        .text-content {
+            padding: 2rem 0;
+        }
+
+        .text-content h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FF6B35;
+            line-height: 1.3;
+        }
+
+        .text-content .subtitle {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #F7931E;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .text-content p {
+            font-size: 1rem;
+            color: #e0e0e0;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-highlight {
+            background: rgba(255, 107, 53, 0.1);
+            border-left: 4px solid #FF6B35;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .feature-highlight h4 {
+            color: #FF6B35;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-highlight ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-highlight li {
+            color: #e0e0e0;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-highlight li::before {
+            content: "•";
+            color: #FF6B35;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+        }
+
+        .image-content {
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover .main-image {
+            transform: scale(1.02);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-container:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .loading-placeholder {
+            width: 100%;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #adb5bd;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 107, 53, 0.2);
+            color: #FF6B35;
+            padding: 0.4rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        /* 不同section的主题色 */
+        .section:nth-child(odd) .text-content h3 {
+            color: #FF6B35;
+        }
+
+        .section:nth-child(odd) .text-content .subtitle {
+            color: #F7931E;
+        }
+
+        .section:nth-child(odd) .feature-highlight {
+            background: rgba(255, 107, 53, 0.1);
+            border-left-color: #FF6B35;
+        }
+
+        .section:nth-child(odd) .feature-highlight h4 {
+            color: #FF6B35;
+        }
+
+        .section:nth-child(even) .text-content h3 {
+            color: #06D6A0;
+        }
+
+        .section:nth-child(even) .text-content .subtitle {
+            color: #20C997;
+        }
+
+        .section:nth-child(even) .feature-highlight {
+            background: rgba(6, 214, 160, 0.1);
+            border-left-color: #06D6A0;
+        }
+
+        .section:nth-child(even) .feature-highlight h4 {
+            color: #06D6A0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                padding-top: 100px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .section-reverse .section-content {
+                direction: ltr;
+            }
+            
+            .text-content h3 {
+                font-size: 1.8rem;
+            }
+            
+            .text-content .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* 页面加载动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>各类AI提醒</span>
+            </div>
+            <div class="nav-menu">
+                <a href="../portfolio.html" class="nav-link">&larr; 返回作品集</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="page-header fade-in">
+            <h1 class="page-title">各类AI提醒</h1>
+            <p class="page-subtitle">智能化提醒系统 · 全流程自动化协同</p>
+            <p class="page-description">
+                通过IM开放文档接入各类定时脚本，构建覆盖应用监控、会议协同、生活关怀、气象预警等多场景的智能提醒矩阵，
+                实现从感知到响应的全流程自动化，让每一个关键时刻都不被错过。
+            </p>
+        </header>
+
+        <!-- 第一部分：应用商店评论监控 -->
+        <section class="section fade-in-delay-1">
+            <div class="section-content">
+                <div class="image-content">
+                    <div class="image-container">
+                        <div class="loading-placeholder" id="loading1">
+                            <div class="loading-spinner"></div>
+                            <p>正在加载图片...</p>
+                        </div>
+                        <img 
+                            class="main-image" 
+                            id="image1"
+                            src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/002.jpg" 
+                            alt="应用商店智能评论监控系统"
+                            style="display: none;"
+                            onload="handleImageLoad(1)"
+                            onerror="handleImageError(1)"
+                        />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+                <div class="text-content">
+                    <h3>应用商店智能评论监控系统</h3>
+                    <p class="subtitle">全渠道评价动态感知与协同响应方案</p>
+                    <p>实时捕获公司 APP 在主流应用商店的用户反馈动态，构建全渠道评价监控网络，实现新增评价的即时感知与群组定向推送，确保用户声音高效触达团队核心环节。</p>
+                    
+                    <div class="feature-highlight">
+                        <h4>智能化升级规划</h4>
+                        <p>后续将深度集成大模型能力，通过自然语言理解与语义分析技术，对评论内容进行智能筛选与精准画像：</p>
+                        <ul>
+                            <li>基于评论主题自动匹配对应模块产品负责人，实现精准触达</li>
+                            <li>智能生成标签体系（如功能建议、体验问题、BUG 反馈等），完成评论内容的结构化分类</li>
+                        </ul>
+                    </div>
+
+                    <p>通过 "实时监控 - 智能分析 - 精准分发" 的全流程闭环，让用户反馈成为产品迭代的核心驱动力，提升团队响应效率与决策精准度。</p>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">实时监控</span>
+                        <span class="tech-tag">智能分析</span>
+                        <span class="tech-tag">自动推送</span>
+                        <span class="tech-tag">NLP处理</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二部分：智能周会协同提醒 -->
+        <section class="section fade-in-delay-2">
+            <div class="section-content">
+                <div class="text-content">
+                    <h3>智能周会协同提醒系统</h3>
+                    <p class="subtitle">全流程会议筹备自动化方案</p>
+                    <p>基于预设周期与时间规则，构建智能化周会提醒机制：在每周指定时段自动触发全员通知，同步完成周会时间、议题的标准化提醒，并精准触达部门成员完成汇报文档的更新与提交引导，确保会议筹备环节高效有序。</p>
+                    
+                    <div class="feature-highlight">
+                        <h4>核心功能特性</h4>
+                        <ul>
+                            <li>周期性自动触发，无需人工干预</li>
+                            <li>标准化提醒模板，确保信息一致性</li>
+                            <li>精准成员触达，提升参与度</li>
+                            <li>文档提交引导，规范化汇报流程</li>
+                        </ul>
+                    </div>
+
+                    <p>通过自动化提醒与任务联动，减少人工协调成本，强化团队会议准备的规范性与及时性，为周会高效召开奠定协同基础。</p>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">定时任务</span>
+                        <span class="tech-tag">自动化协同</span>
+                        <span class="tech-tag">流程规范</span>
+                        <span class="tech-tag">团队管理</span>
+                    </div>
+                </div>
+                <div class="image-content">
+                    <div class="image-container">
+                        <div class="loading-placeholder" id="loading2">
+                            <div class="loading-spinner"></div>
+                            <p>正在加载图片...</p>
+                        </div>
+                        <img 
+                            class="main-image" 
+                            id="image2"
+                            src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/003.jpg" 
+                            alt="智能周会协同提醒系统"
+                            style="display: none;"
+                            onload="handleImageLoad(2)"
+                            onerror="handleImageError(2)"
+                        />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三部分：干饭人必备订餐提醒 -->
+        <section class="section section-reverse">
+            <div class="section-content">
+                <div class="text-content">
+                    <h3>干饭人必备-订餐提醒</h3>
+                    <p class="subtitle">工作日膳食规划自动化提醒机制</p>
+                    <p>基于工作日场景定制智能化订餐提醒服务：每日指定时段精准触发私聊通知，向指定人员自动推送订餐时间提醒，同步整合实时天气数据，贴心呈现当日所在地天气状况，助力合理规划出行与膳食安排。</p>
+                    
+                    <div class="feature-highlight">
+                        <h4>个性化生活关怀升级</h4>
+                        <p>响应团队需求新增「五行配色穿搭建议」模块，结合传统五行文化与日常穿搭场景：</p>
+                        <ul>
+                            <li>依据当日五行能量属性生成服装配色推荐</li>
+                            <li>金系清爽白、木系活力绿等个性化搭配</li>
+                            <li>让订餐提醒延伸至日常穿搭的贴心指引</li>
+                        </ul>
+                    </div>
+
+                    <p>通过「订餐提醒 + 天气服务 + 穿搭建议」的多维度关怀组合，打造兼具实用性与人文温度的工作日生活助手，让每日膳食规划更高效，生活细节更舒心。</p>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">定时提醒</span>
+                        <span class="tech-tag">天气API</span>
+                        <span class="tech-tag">五行文化</span>
+                        <span class="tech-tag">生活助手</span>
+                    </div>
+                </div>
+                <div class="image-content">
+                    <div class="image-container">
+                        <div class="loading-placeholder" id="loading3">
+                            <div class="loading-spinner"></div>
+                            <p>正在加载图片...</p>
+                        </div>
+                        <img 
+                            class="main-image" 
+                            id="image3"
+                            src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/004.jpg" 
+                            alt="干饭人必备-订餐提醒"
+                            style="display: none;"
+                            onload="handleImageLoad(3)"
+                            onerror="handleImageError(3)"
+                        />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四部分：天气预警 -->
+        <section class="section">
+            <div class="section-content">
+                <div class="text-content">
+                    <h3>天气预警</h3>
+                    <p class="subtitle">气象风险实时感知与精准触达方案</p>
+                    <p>深度对接和风天气 API 接口，构建专业化气象预警监测体系：聚焦指定类型气象风险（如暴雨、雷电、高温等），实现气象局官方预警信息的实时捕获与同步解析，确保预警信号从发布到接收的零延迟传递。</p>
+                    
+                    <div class="feature-highlight">
+                        <h4>全流程响应机制</h4>
+                        <ul>
+                            <li>监测：实时捕获气象局官方预警信息</li>
+                            <li>解析：同步解析预警级别与影响范围</li>
+                            <li>分发：精准触达每一位关注成员</li>
+                            <li>响应：为安全决策提供及时参考</li>
+                        </ul>
+                    </div>
+
+                    <p>基于预设关注范围与人员配置，在预警触发瞬间自动启动定向推送机制，将权威预警信息精准触达每一位关注成员，形成完整的响应闭环。</p>
+
+                    <p>通过技术接口与协同机制的深度融合，让气象预警信息高效渗透至团队日常，为出行安全、工作安排调整提供及时可靠的决策参考，强化风险前置防控能力。</p>
+
+                    <div class="tech-tags">
+                        <span class="tech-tag">和风天气API</span>
+                        <span class="tech-tag">实时监测</span>
+                        <span class="tech-tag">预警推送</span>
+                        <span class="tech-tag">风险防控</span>
+                    </div>
+                </div>
+                <div class="image-content">
+                    <div class="image-container">
+                        <div class="loading-placeholder" id="loading4">
+                            <div class="loading-spinner"></div>
+                            <p>正在加载图片...</p>
+                        </div>
+                        <img 
+                            class="main-image" 
+                            id="image4"
+                            src="https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/005.jpg" 
+                            alt="天气预警系统"
+                            style="display: none;"
+                            onload="handleImageLoad(4)"
+                            onerror="handleImageError(4)"
+                        />
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function handleImageLoad(index) {
+            const loadingPlaceholder = document.getElementById(`loading${index}`);
+            const image = document.getElementById(`image${index}`);
+            
+            // 隐藏加载占位符
+            loadingPlaceholder.style.display = 'none';
+            // 显示图片
+            image.style.display = 'block';
+            
+            console.log(`图片${index}加载成功`);
+        }
+
+        function handleImageError(index) {
+            const loadingPlaceholder = document.getElementById(`loading${index}`);
+            
+            loadingPlaceholder.innerHTML = `
+                <div style="text-align: center; color: #ff6b6b;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">⚠️</div>
+                    <p>图片加载失败</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">
+                        请检查网络连接或稍后重试
+                    </p>
+                    <button onclick="retryLoadImage(${index})" style="
+                        margin-top: 1rem;
+                        padding: 0.5rem 1rem;
+                        background: rgba(255, 107, 53, 0.2);
+                        color: #FF6B35;
+                        border: 1px solid rgba(255, 107, 53, 0.3);
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">重新加载</button>
+                </div>
+            `;
+            
+            console.error(`图片${index}加载失败`);
+        }
+
+        function retryLoadImage(index) {
+            const loadingPlaceholder = document.getElementById(`loading${index}`);
+            const image = document.getElementById(`image${index}`);
+            
+            // 重新显示加载状态
+            loadingPlaceholder.innerHTML = `
+                <div class="loading-spinner"></div>
+                <p>正在重新加载图片...</p>
+            `;
+            
+            // 重新设置图片源
+            const imageUrls = [
+                'https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/002.jpg',
+                'https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/003.jpg',
+                'https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/004.jpg',
+                'https://daniel-1259660459.cos.ap-guangzhou.myqcloud.com/005.jpg'
+            ];
+            
+            image.src = imageUrls[index - 1] + '?' + new Date().getTime();
+        }
+
+        // 滚动动画
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // 页面加载完成后的动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化滚动观察器
+            observeElements();
+
+            // 页面标题动画
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                element.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+    </script>
+</body>
+</html> 
