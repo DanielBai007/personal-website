@@ -4,6 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>项目详情 - 牛马小皮鞭</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VERF25MHYL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VERF25MHYL', {
+            page_title: '牛马小皮鞭详情页',
+            page_location: window.location.href,
+            content_group1: '项目详情',
+            content_group2: '实时工资看板'
+        });
+        
+        // 自定义事件追踪
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, {
+                event_category: 'User Interaction',
+                event_label: parameters.label || '',
+                value: parameters.value || 0,
+                ...parameters
+            });
+        }
+        
+        // iframe加载追踪
+        function trackIframeLoad(platform) {
+            trackEvent('iframe_loaded', {
+                event_category: 'External Content',
+                event_label: `${platform}平台加载成功`,
+                platform: platform
+            });
+        }
+        
+        // 外链访问追踪
+        function trackExternalLink(url, platform) {
+            trackEvent('external_link_click', {
+                event_category: 'Outbound Links',
+                event_label: platform,
+                link_url: url
+            });
+        }
+    </script>
     <style>
         * {
             margin: 0;

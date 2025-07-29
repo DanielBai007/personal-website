@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人网站 - 项目展示</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VERF25MHYL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VERF25MHYL', {
+            page_title: '个人网站首页',
+            page_location: window.location.href,
+            content_group1: '首页'
+        });
+        
+        // 自定义事件追踪
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, {
+                event_category: 'User Interaction',
+                event_label: parameters.label || '',
+                value: parameters.value || 0,
+                ...parameters
+            });
+        }
+        
+        // 页面加载完成后的追踪
+        window.addEventListener('load', function() {
+            trackEvent('page_loaded', {
+                event_category: 'Page Performance',
+                event_label: '首页加载完成'
+            });
+        });
+    </script>
     <style>
         * {
             margin: 0;

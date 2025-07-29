@@ -4,6 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>项目详情 - 各类AI提醒</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VERF25MHYL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VERF25MHYL', {
+            page_title: '各类AI提醒详情页',
+            page_location: window.location.href,
+            content_group1: '项目详情',
+            content_group2: 'AI提醒'
+        });
+        
+        // 自定义事件追踪
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, {
+                event_category: 'User Interaction',
+                event_label: parameters.label || '',
+                value: parameters.value || 0,
+                ...parameters
+            });
+        }
+        
+        // 图片加载追踪
+        function trackImageLoad(imageIndex, imageName) {
+            trackEvent('image_loaded', {
+                event_category: 'Content',
+                event_label: `图片${imageIndex}: ${imageName}`,
+                image_index: imageIndex
+            });
+        }
+        
+        // 返回按钮点击追踪
+        function trackBackClick() {
+            trackEvent('back_to_portfolio', {
+                event_category: 'Navigation',
+                event_label: '返回作品集'
+            });
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -387,7 +428,7 @@
                 <span>各类AI提醒</span>
             </div>
             <div class="nav-menu">
-                <a href="../portfolio.html" class="nav-link">&larr; 返回作品集</a>
+                <a href="../portfolio.html" class="nav-link" onclick="trackBackClick()">&larr; 返回作品集</a>
             </div>
         </div>
     </nav>

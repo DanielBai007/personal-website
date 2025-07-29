@@ -4,6 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>项目详情 - 萌娃小讲师（学生版）</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VERF25MHYL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VERF25MHYL', {
+            page_title: '萌娃小讲师学生版详情页',
+            page_location: window.location.href,
+            content_group1: '项目详情',
+            content_group2: 'AI教育助手'
+        });
+        
+        // 自定义事件追踪
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, {
+                event_category: 'User Interaction',
+                event_label: parameters.label || '',
+                value: parameters.value || 0,
+                ...parameters
+            });
+        }
+        
+        // 豆包平台跳转追踪
+        function trackDoubaoJump() {
+            trackEvent('doubao_platform_visit', {
+                event_category: 'External Platform',
+                event_label: '豆包学生版跳转'
+            });
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -422,10 +454,10 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="https://doubao.com/bot/9Uy8mXcO" 
-                       target="_blank" 
-                       class="btn-primary"
-                       onclick="trackPlatformVisit('student')">
+                                            <a href="https://doubao.com/bot/9Uy8mXcO" 
+                           target="_blank" 
+                           class="btn-primary"
+                           onclick="trackPlatformVisit('student'); trackDoubaoJump();"
                         🚀 开始学习
                     </a>
                     <a href="../portfolio.html" class="btn-secondary">
